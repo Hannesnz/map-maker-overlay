@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name": "Map Maker Circle Overlay",
-  "description": "Show a circle overlay on Google Map Maker to make it easier to draw circles (such as roundabouts)",
-  "version": "1.0",
+  "name": "Map Maker Overlay",
+  "description": "Overlay a circle or other images on Google Map Maker to make it easier to draw circles (such as roundabouts) and overlay images",
+  "version": "1.1",
   "background": {
     "scripts": ["background.js"],
     "persistent": true
@@ -14,7 +14,7 @@
   "content_scripts": [
     {
       "matches": ["*://*/mapmaker*"],
-      "js": ["MakeCircle.js"]
+      "js": ["content.js"]
     }
   ],
   "page_action": {
