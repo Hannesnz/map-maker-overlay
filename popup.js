@@ -13,14 +13,17 @@ document.onreadystatechange = function(e) {
 							var crosshairsShowing;
 							var handlesShowing;
 							var keepingAspect;
+							var currentRotation;
 							if (created) {
 								crosshairsShowing = response.crosshairsShowing;
 								handlesShowing = response.handlesShowing;
 								keepingAspect = response.keepingAspect;
+								currentRotation = response.currentRotation;
 							} else {
 								crosshairsShowing = bg.overlayData.showCrosshairs;
 								handlesShowing = true;
 								keepingAspect = true;
+								currentRotation = 0;
 							}
 							$( "#opacity" ).slider({
 								max: 100,
@@ -31,7 +34,6 @@ document.onreadystatechange = function(e) {
 									bg.overlayData.opacity = ui.value / 100;
 									chrome.tabs.sendMessage(tabs[0].id, {action: 'changeOpacity', newValue: ui.value / 100}, function(response) {});
 								}
-
 							});
 							$( "#circle-width" ).slider({
 								max: 15,
@@ -42,7 +44,15 @@ document.onreadystatechange = function(e) {
 									bg.overlayData.circleWidth = ui.value;
 									chrome.tabs.sendMessage(tabs[0].id, {action: 'changeCircleWidth', newValue: ui.value}, function(response) {});
 								}
-
+							});
+							$( "#rotation" ).slider({
+								max: 720,
+								min: 0,
+								value: currentRotation,
+								disabled: !showing,
+								slide: function( event, ui ) {
+									chrome.tabs.sendMessage(tabs[0].id, {action: 'changeRotation', newValue: ui.value}, function(response) {});
+								}
 							});
 							document.getElementById('circle-color').disabled = !showing;
 							$( "#circle-color" ).button().val(bg.overlayData.circleColor).on('input', function() { 
@@ -56,7 +66,6 @@ document.onreadystatechange = function(e) {
 									
 									chrome.tabs.sendMessage(tabs[0].id, {action: 'resetPosition'}, function(response) {});
 								});
-							console.log(keepingAspect);
 							$( "#toggleKeepAspect" ).prop('checked', keepingAspect).button({disabled:!showing, icons: {primary: (keepingAspect) ? "ui-icon-check" : "ui-icon-closethick"}}).button("refresh")
 								.click(function( event ) {
 									keepingAspect = !keepingAspect;
@@ -86,6 +95,7 @@ document.onreadystatechange = function(e) {
 									$( "#toggle" ).button( "option", "label", (showing) ? "Hide Overlay" : "Show Overlay" );
 									$( "#reset" ).button( "option", "disabled", !showing );
 									$( "#opacity" ).slider( "option", "disabled", !showing );
+									$( "#rotation" ).slider( "option", "disabled", !showing );
 									$( "#circle-width" ).slider( "option", "disabled", !showing );
 									$( "#circle-color" ).button( "option", "disabled", !showing );
 									$( "#toggleCrosshairs" ).button( "option", "disabled", !showing );

@@ -150,7 +150,7 @@ function setPosition() {
 function createOverlay() {
 	container = document.createElement('div');
 	container.setAttribute('id', 'overlay-container');
-	container.setAttribute('style', 'position: absolute; display: block');
+	container.setAttribute('style', 'position: absolute; display: block;');
 
 	circle = document.createElement('div');
 	circle.setAttribute('id', 'overlay-circle');
@@ -160,12 +160,12 @@ function createOverlay() {
 	horzLine = document.createElement('div');
 	horzLine.setAttribute('id', 'overlay-horzline');
 	horzLine.setAttribute('style', 'position: absolute; display: block; background-color: rgb(222, 15, 15); top: 0; bottom: 0; left: 0; right: 0; margin: auto; width:1px; height: 1px; box-sizing: border-box;');
-	container.appendChild(horzLine);
+	circle.appendChild(horzLine);
 
 	vertLine = document.createElement('div');
 	vertLine.setAttribute('id', 'overlay-vertline');
 	vertLine.setAttribute('style', 'position: absolute; display: block; background-color: rgb(222, 15, 15); top: 0; bottom: 0; left: 0; right: 0; margin: auto; height:1px; width: 1px; box-sizing: border-box;');
-	container.appendChild(vertLine);
+	circle.appendChild(vertLine);
 
 	setOpacity(opacity);
 	setCircleColor(circleColor);
@@ -229,6 +229,10 @@ function toggleKeepAspect() {
 	}
 }
 
+function setRotation(newRotation) {
+	circle.style.transform = 'rotate('+newRotation/4+'deg)';
+}
+
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		if (request.action === 'changeOpacity') {
@@ -238,6 +242,8 @@ chrome.runtime.onMessage.addListener(
 			resetCrosshairs();
 		} else if (request.action === 'changeCircleColor') {
 			setCircleColor(request.newValue);
+		} else if (request.action === 'changeRotation') {
+			setRotation(request.newValue);
 		} else if (request.action === 'resetPosition') {
 			setPosition();
 		} else if (request.action === 'toggleCrosshairs') {
@@ -251,16 +257,19 @@ chrome.runtime.onMessage.addListener(
 			var isShowing = exists;
 			var crosshairsShowing = false;
 			var handlesShowing = false;
+			var currentRotation = 0;
 			if (exists) {
 				isShowing = container.style.display == 'block';
 				crosshairsShowing = horzLine.style.display == 'block';
 				handlesShowing = topLeft.style.display == 'block';
+				currentRotation = parseFloat(circle.style.transform.replace(/[^\d.-]/g, ''))*4;
 			}
 			sendResponse({'showing': isShowing,
 						  'created': exists,
 						  'crosshairsShowing': crosshairsShowing,
 						  'handlesShowing' : handlesShowing,
-						  'keepingAspect' : keepAspect});
+						  'keepingAspect' : keepAspect,
+						  'currentRotation' : currentRotation});
 		} else {
 			if (container == null) {
 				circleWidth = request.circleWidth;

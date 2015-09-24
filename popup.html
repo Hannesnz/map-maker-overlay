@@ -1,6 +1,6 @@
 <!doctype html>
 <html>
-  <head style='width: 250px; height: 330px;'>
+  <head style='width: 250px;'>
     <title>Map Maker Circle Overlay Popup</title>
 	<link rel="stylesheet" href="jquery-ui.min.css">
 	<link rel="stylesheet" href="jquery-ui.theme.min.css">
@@ -9,7 +9,7 @@
 	<script src="jquery-ui.min.js"></script>
     <script src="popup.js"></script>
   </head>
-  <body style='width: 250px; height: 330px'>
+  <body style='width: 250px'>
     <button id='toggle' style='display:block'></button>
 	<div id='circle-options'>
 		<button id='reset' style='margin-top: 10px; display:block'>Reset Position</button>
@@ -19,9 +19,11 @@
 		<div id='circle-width'></div>
 		<div style='margin-top: 10px; margin-bottom: 5px; display:block'>Circle Color:</div>
 		<div style='display:block'><input type="color" id='circle-color'> </div>
+		<div style='margin-top: 10px; margin-bottom: 5px; display:block'>Rotation:</div>
+		<div id='rotation'></div>
 		<input type="checkbox" id="toggleKeepAspect"><label style='margin-top: 10px' for="toggleKeepAspect">Keep Aspect Ratio</label>
 		<button style='margin-top: 10px; display:block' id='toggleCrosshairs' style='display:block'></button>
-		<button style='margin-top: 10px; display:block' id='toggleHandles' style='display:block'></button>
+		<button style='margin-top: 10px; margin-bottom:10px; display:block' id='toggleHandles' style='display:block'></button>
 	</div>
   </body>
 </html>
