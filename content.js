@@ -18,7 +18,9 @@ function startTopRightResize(e) {
 
 function topRightResize(e) {
 	container.style.width = (e.clientX - diffX) + 'px';
-	container.style.height = parseInt(container.style.width) + 'px';
+	if (keepAspect)	{
+		container.style.height = parseInt(container.style.width) + 'px';
+	}
 	resetCrosshairs();
 }
 
@@ -30,7 +32,9 @@ function startBottomLeftResize(e) {
 
 function bottomLeftResize(e) {
 	container.style.height = (e.clientY - diffY) + 'px';
-	container.style.width = parseInt(container.style.height) + 'px';
+	if (keepAspect)	{
+		container.style.width = parseInt(container.style.height) + 'px';
+	}
 	resetCrosshairs();
 }
 
@@ -45,8 +49,13 @@ function bottomRightResize(e) {
 	var newHeight = (e.clientY - diffY),
 		newWidth = (e.clientX - diffX);
 
-	container.style.height = Math.max(newHeight, newWidth) + 'px';
-	container.style.width = Math.max(newHeight, newWidth) + 'px';
+	if (keepAspect) {
+		container.style.height = Math.max(newHeight, newWidth) + 'px';
+		container.style.width = Math.max(newHeight, newWidth) + 'px';
+	} else {
+		container.style.height = newHeight + 'px';
+		container.style.width = newWidth + 'px';
+	}
 	resetCrosshairs();
 }
 
@@ -88,6 +97,13 @@ var gm;
 var circleWidth;
 var circleColor;
 var opacity;
+var keepAspect = true;
+var observer = new MutationObserver(function(mutations) {
+	mutations.forEach(function(mutation) {
+		console.log(mutation.oldValue);
+	});
+});
+var config = {attributes: true, attributeOldValue: true};
 
 function getMapPositions() {
 	gm = document.getElementById('mapv3');
@@ -117,6 +133,8 @@ function getMapPositions() {
 	mostTop = mostTop + Math.abs(tileOffsetTop);
 
 	gm = gm.childNodes[2];
+
+	observer.observe(gm, config);
 }
 
 function setPosition() {
@@ -203,6 +221,14 @@ function toggleHandles() {
 	bottomLeft.style.display = (bottomLeft.style.display == 'block' ? 'none' : 'block');
 };
 
+function toggleKeepAspect() {
+	keepAspect = !keepAspect;
+	if (keepAspect) {
+		container.style.width = parseInt(container.style.height) + 'px';
+		resetCrosshairs();
+	}
+}
+
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		if (request.action === 'changeOpacity') {
@@ -218,6 +244,8 @@ chrome.runtime.onMessage.addListener(
 			toggleCrosshairs();
 		} else if (request.action === 'toggleHandles') {
 			toggleHandles();
+		} else if (request.action === 'toggleKeepAspect') {
+			toggleKeepAspect();
 		} else if (request.action === 'overlayShowing') {
 			var exists = container != null;
 			var isShowing = exists;
@@ -231,7 +259,8 @@ chrome.runtime.onMessage.addListener(
 			sendResponse({'showing': isShowing,
 						  'created': exists,
 						  'crosshairsShowing': crosshairsShowing,
-						   'handlesShowing' : handlesShowing});
+						  'handlesShowing' : handlesShowing,
+						  'keepingAspect' : keepAspect});
 		} else {
 			if (container == null) {
 				circleWidth = request.circleWidth;

@@ -12,12 +12,15 @@ document.onreadystatechange = function(e) {
 							var created = response.created;
 							var crosshairsShowing;
 							var handlesShowing;
+							var keepingAspect;
 							if (created) {
 								crosshairsShowing = response.crosshairsShowing;
 								handlesShowing = response.handlesShowing;
+								keepingAspect = response.keepingAspect;
 							} else {
 								crosshairsShowing = bg.overlayData.showCrosshairs;
 								handlesShowing = true;
+								keepingAspect = true;
 							}
 							$( "#opacity" ).slider({
 								max: 100,
@@ -53,6 +56,13 @@ document.onreadystatechange = function(e) {
 									
 									chrome.tabs.sendMessage(tabs[0].id, {action: 'resetPosition'}, function(response) {});
 								});
+							console.log(keepingAspect);
+							$( "#toggleKeepAspect" ).prop('checked', keepingAspect).button({disabled:!showing, icons: {primary: (keepingAspect) ? "ui-icon-check" : "ui-icon-closethick"}}).button("refresh")
+								.click(function( event ) {
+									keepingAspect = !keepingAspect;
+									$( "#toggleKeepAspect" ).prop('checked', keepingAspect).button("refresh").button( "option", "icons", {primary: (keepingAspect) ? "ui-icon-check" : "ui-icon-closethick"} );
+									chrome.tabs.sendMessage(tabs[0].id, {action: 'toggleKeepAspect'}, function(response) {});
+								});
 							$( "#toggleCrosshairs" ).button({disabled:!showing, label:(crosshairsShowing) ? "Hide Crosshairs" : "Show Crosshairs"})
 								.click(function( event ) {
 									event.preventDefault();
@@ -80,6 +90,7 @@ document.onreadystatechange = function(e) {
 									$( "#circle-color" ).button( "option", "disabled", !showing );
 									$( "#toggleCrosshairs" ).button( "option", "disabled", !showing );
 									$( "#toggleHandles" ).button( "option", "disabled", !showing );
+									$( "#toggleKeepAspect" ).button( "option", "disabled", !showing );
 
 									chrome.tabs.sendMessage(tabs[0].id, {action: 'toggleVisibility',
 																		 opacity: bg.overlayData.opacity,
