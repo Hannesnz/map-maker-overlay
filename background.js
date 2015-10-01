@@ -39,7 +39,7 @@ OverlayData.prototype.saveData = function() {
 
 var overlayData = null;
 
-chrome.runtime.onStartup.addListener(function() {
+chrome.runtime.onInstalled.addListener(function() {
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
     chrome.declarativeContent.onPageChanged.addRules([
       {
