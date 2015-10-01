@@ -10,20 +10,21 @@
     <script src="popup.js"></script>
   </head>
   <body style='width: 250px'>
-    <button id='toggle' style='display:block'></button>
-	<div id='circle-options'>
-		<button id='reset' style='margin-top: 10px; display:block'>Reset Position</button>
-		<div style='margin-top: 10px; margin-bottom: 5px; display:block'>Opacity:</div>
-		<div id='opacity'></div>
-		<div style='margin-top: 10px; margin-bottom: 5px; display:block'>Circle Width:</div>
-		<div id='circle-width'></div>
-		<div style='margin-top: 10px; margin-bottom: 5px; display:block'>Circle Color:</div>
-		<div style='display:block'><input type="color" id='circle-color'> </div>
-		<div style='margin-top: 10px; margin-bottom: 5px; display:block'>Rotation:</div>
-		<div id='rotation'></div>
-		<input type="checkbox" id="toggleKeepAspect"><label style='margin-top: 10px' for="toggleKeepAspect">Keep Aspect Ratio</label>
-		<button style='margin-top: 10px; display:block' id='toggleCrosshairs' style='display:block'></button>
-		<button style='margin-top: 10px; margin-bottom:10px; display:block' id='toggleHandles' style='display:block'></button>
+    <div id='not-ready'>
+		<div style='margin: 10px; display:block'>Page not fully loaded, please try again...</div>
+	</div>
+  	<div id='controls' style='display:none'>
+		<button id='toggle' style='display:block'></button>
+		<div id='circle-options'>
+			<button id='reset' style='margin-top: 10px; display:block'>Reset Position</button>
+			<div style='margin-top: 10px; margin-bottom: 5px; display:block'>Opacity:</div>
+			<div id='opacity'></div>
+			<div style='margin-top: 10px; margin-bottom: 5px; display:block'>Circle Width:</div>
+			<div id='circle-width'></div>
+			<div style='margin-top: 10px; margin-bottom: 5px; display:block'>Circle Color:</div>
+			<div style='display:block'><input type="color" id='circle-color'> </div>
+			<button style='margin-top: 10px; margin-bottom:10px; display:block' id='toggleHandles' style='display:block'></button>
+		</div>
 	</div>
   </body>
 </html>
