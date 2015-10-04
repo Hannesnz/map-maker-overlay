@@ -3,6 +3,10 @@ var overlay,
 	swMarker,
 	nwMarker,
 	seMarker,
+	leftMarker,
+	topMaker,
+	rightMarker,
+	bottomMarker,
 	centerMarker,
 	centerPreviousPos,
     map;
@@ -27,12 +31,15 @@ var
   imgSrc = 'http://homepages.slingshot.co.nz/~hannes.nz/overlays/Amazeme.png';
 
 function resetBounds() {
-	var distance = google.maps.geometry.spherical.computeDistanceBetween(map.getBounds().getNorthEast(), map.getBounds().getSouthWest());
-    
-    swBound = google.maps.geometry.spherical.computeOffset(map.getBounds().getSouthWest(), distance / 6, 45);
-    neBound = google.maps.geometry.spherical.computeOffset(map.getBounds().getNorthEast(), distance / 6, 225);
-    nwBound = new google.maps.LatLng(neBound.lat(), swBound.lng())
-    seBound = new google.maps.LatLng(swBound.lat(), neBound.lng())
+    swBound = google.maps.geometry.spherical.interpolate(map.getBounds().getSouthWest(), map.getBounds().getNorthEast(), 0.15);
+    neBound = google.maps.geometry.spherical.interpolate(map.getBounds().getNorthEast(), map.getBounds().getSouthWest(), 0.15);
+    nwBound = new google.maps.LatLng(neBound.lat(), swBound.lng());
+    seBound = new google.maps.LatLng(swBound.lat(), neBound.lng());
+	leftBound = google.maps.geometry.spherical.interpolate(nwBound, swBound, 0.5);
+	topBound = google.maps.geometry.spherical.interpolate(neBound, nwBound, 0.5);
+	rightBound = google.maps.geometry.spherical.interpolate(neBound, seBound, 0.5);
+	bottomBound = google.maps.geometry.spherical.interpolate(seBound, swBound, 0.5);
+
     bounds = new google.maps.LatLngBounds(swBound, neBound);
 }
 
@@ -77,6 +84,42 @@ function addImage() {
         crossOnDrag: false
     });
 
+    leftMarker = new google.maps.Marker({
+        position: leftBound,
+        icon: circleIcon,
+        map: map,
+        cursor: 'ew-resize',
+        draggable: true,
+        crossOnDrag: false
+    });
+
+    topMarker = new google.maps.Marker({
+        position: topBound,
+        map: map,
+        icon: circleIcon,
+        draggable: true,
+        cursor: 'ns-resize',
+        crossOnDrag: false
+    });
+    
+    rightMarker = new google.maps.Marker({
+        position: rightBound,
+        map: map,
+        icon: circleIcon,
+        draggable: true,
+        cursor: 'ew-resize',
+        crossOnDrag: false
+    });
+
+    bottomMarker = new google.maps.Marker({
+        position: bottomBound,
+        map: map,
+        icon: circleIcon,
+        draggable: true,
+        cursor: 'ns-resize',
+        crossOnDrag: false
+    });
+
     centerMarker = new google.maps.Marker({
         position: bounds.getCenter(),
         map: map,
@@ -87,11 +130,63 @@ function addImage() {
     });
     centerPreviousPos = centerMarker.getPosition();
 
-    google.maps.event.addListener(swMarker, 'drag', function () {
+    google.maps.event.addListener(leftMarker, 'drag', function () {
+		nwMarker.setPosition(new google.maps.LatLng(neMarker.getPosition().lat(), leftMarker.getPosition().lng()));
+ 		swMarker.setPosition(new google.maps.LatLng(seMarker.getPosition().lat(), leftMarker.getPosition().lng()));
+        var newBounds = new google.maps.LatLngBounds(swMarker.getPosition(), neMarker.getPosition());
+		leftMarker.setPosition(google.maps.geometry.spherical.interpolate(nwMarker.getPosition(), swMarker.getPosition(), 0.5));
+		topMarker.setPosition(google.maps.geometry.spherical.interpolate(neMarker.getPosition(), nwMarker.getPosition(), 0.5));
+		bottomMarker.setPosition(google.maps.geometry.spherical.interpolate(seMarker.getPosition(), swMarker.getPosition(), 0.5));
+        centerMarker.setPosition(newBounds.getCenter());
+        centerPreviousPos = centerMarker.getPosition();
+        overlay.updateBounds(newBounds);
+	});
+
+    google.maps.event.addListener(rightMarker, 'drag', function () {
+		neMarker.setPosition(new google.maps.LatLng(nwMarker.getPosition().lat(), rightMarker.getPosition().lng()));
+ 		seMarker.setPosition(new google.maps.LatLng(swMarker.getPosition().lat(), rightMarker.getPosition().lng()));
+        var newBounds = new google.maps.LatLngBounds(swMarker.getPosition(), neMarker.getPosition());
+		rightMarker.setPosition(google.maps.geometry.spherical.interpolate(neMarker.getPosition(), seMarker.getPosition(), 0.5));
+		topMarker.setPosition(google.maps.geometry.spherical.interpolate(neMarker.getPosition(), nwMarker.getPosition(), 0.5));
+		bottomMarker.setPosition(google.maps.geometry.spherical.interpolate(seMarker.getPosition(), swMarker.getPosition(), 0.5));
+        centerMarker.setPosition(newBounds.getCenter());
+        centerPreviousPos = centerMarker.getPosition();
+        overlay.updateBounds(newBounds);
+	});
+
+    google.maps.event.addListener(topMarker, 'drag', function () {
+		neMarker.setPosition(new google.maps.LatLng(topMarker.getPosition().lat(), seMarker.getPosition().lng()));
+ 		nwMarker.setPosition(new google.maps.LatLng(topMarker.getPosition().lat(), swMarker.getPosition().lng()));
+        var newBounds = new google.maps.LatLngBounds(swMarker.getPosition(), neMarker.getPosition());
+		topMarker.setPosition(google.maps.geometry.spherical.interpolate(neMarker.getPosition(), nwMarker.getPosition(), 0.5));
+ 		leftMarker.setPosition(google.maps.geometry.spherical.interpolate(nwMarker.getPosition(), swMarker.getPosition(), 0.5));
+		rightMarker.setPosition(google.maps.geometry.spherical.interpolate(neMarker.getPosition(), seMarker.getPosition(), 0.5));
+        centerMarker.setPosition(newBounds.getCenter());
+        centerPreviousPos = centerMarker.getPosition();
+        overlay.updateBounds(newBounds);
+	});
+
+    google.maps.event.addListener(bottomMarker, 'drag', function () {
+		seMarker.setPosition(new google.maps.LatLng(bottomMarker.getPosition().lat(), neMarker.getPosition().lng()));
+ 		swMarker.setPosition(new google.maps.LatLng(bottomMarker.getPosition().lat(), nwMarker.getPosition().lng()));
+        var newBounds = new google.maps.LatLngBounds(swMarker.getPosition(), neMarker.getPosition());
+		bottomMarker.setPosition(google.maps.geometry.spherical.interpolate(seMarker.getPosition(), swMarker.getPosition(), 0.5));
+ 		leftMarker.setPosition(google.maps.geometry.spherical.interpolate(nwMarker.getPosition(), swMarker.getPosition(), 0.5));
+		rightMarker.setPosition(google.maps.geometry.spherical.interpolate(neMarker.getPosition(), seMarker.getPosition(), 0.5));
+        centerMarker.setPosition(newBounds.getCenter());
+        centerPreviousPos = centerMarker.getPosition();
+        overlay.updateBounds(newBounds);
+	});
+
+	google.maps.event.addListener(swMarker, 'drag', function () {
 
         var newBounds = new google.maps.LatLngBounds(swMarker.getPosition(), neMarker.getPosition());
         nwMarker.setPosition(new google.maps.LatLng(neMarker.getPosition().lat(), swMarker.getPosition().lng()));
         seMarker.setPosition(new google.maps.LatLng(swMarker.getPosition().lat(), neMarker.getPosition().lng()));
+ 		leftMarker.setPosition(google.maps.geometry.spherical.interpolate(nwMarker.getPosition(), swMarker.getPosition(), 0.5));
+		topMarker.setPosition(google.maps.geometry.spherical.interpolate(neMarker.getPosition(), nwMarker.getPosition(), 0.5));
+ 		rightMarker.setPosition(google.maps.geometry.spherical.interpolate(neMarker.getPosition(), seMarker.getPosition(), 0.5));
+		bottomMarker.setPosition(google.maps.geometry.spherical.interpolate(seMarker.getPosition(), swMarker.getPosition(), 0.5));
         centerMarker.setPosition(newBounds.getCenter());
         centerPreviousPos = centerMarker.getPosition();
         overlay.updateBounds(newBounds);
@@ -102,6 +197,10 @@ function addImage() {
         var newBounds = new google.maps.LatLngBounds(swMarker.getPosition(), neMarker.getPosition());
         nwMarker.setPosition(new google.maps.LatLng(neMarker.getPosition().lat(), swMarker.getPosition().lng()));
         seMarker.setPosition(new google.maps.LatLng(swMarker.getPosition().lat(), neMarker.getPosition().lng()));
+ 		leftMarker.setPosition(google.maps.geometry.spherical.interpolate(nwMarker.getPosition(), swMarker.getPosition(), 0.5));
+		topMarker.setPosition(google.maps.geometry.spherical.interpolate(neMarker.getPosition(), nwMarker.getPosition(), 0.5));
+ 		rightMarker.setPosition(google.maps.geometry.spherical.interpolate(neMarker.getPosition(), seMarker.getPosition(), 0.5));
+		bottomMarker.setPosition(google.maps.geometry.spherical.interpolate(seMarker.getPosition(), swMarker.getPosition(), 0.5));
         centerMarker.setPosition(newBounds.getCenter());
         centerPreviousPos = centerMarker.getPosition();
         overlay.updateBounds(newBounds);
@@ -112,6 +211,10 @@ function addImage() {
         neMarker.setPosition(new google.maps.LatLng(nwMarker.getPosition().lat(), seMarker.getPosition().lng()));
         swMarker.setPosition(new google.maps.LatLng(seMarker.getPosition().lat(), nwMarker.getPosition().lng()));
         var newBounds = new google.maps.LatLngBounds(swMarker.getPosition(), neMarker.getPosition());
+ 		leftMarker.setPosition(google.maps.geometry.spherical.interpolate(nwMarker.getPosition(), swMarker.getPosition(), 0.5));
+		topMarker.setPosition(google.maps.geometry.spherical.interpolate(neMarker.getPosition(), nwMarker.getPosition(), 0.5));
+ 		rightMarker.setPosition(google.maps.geometry.spherical.interpolate(neMarker.getPosition(), seMarker.getPosition(), 0.5));
+		bottomMarker.setPosition(google.maps.geometry.spherical.interpolate(seMarker.getPosition(), swMarker.getPosition(), 0.5));
         centerMarker.setPosition(newBounds.getCenter());
         centerPreviousPos = centerMarker.getPosition();
         overlay.updateBounds(newBounds);
@@ -122,6 +225,10 @@ function addImage() {
         neMarker.setPosition(new google.maps.LatLng(nwMarker.getPosition().lat(), seMarker.getPosition().lng()));
         swMarker.setPosition(new google.maps.LatLng(seMarker.getPosition().lat(), nwMarker.getPosition().lng()));
         var newBounds = new google.maps.LatLngBounds(swMarker.getPosition(), neMarker.getPosition());
+ 		leftMarker.setPosition(google.maps.geometry.spherical.interpolate(nwMarker.getPosition(), swMarker.getPosition(), 0.5));
+		topMarker.setPosition(google.maps.geometry.spherical.interpolate(neMarker.getPosition(), nwMarker.getPosition(), 0.5));
+ 		rightMarker.setPosition(google.maps.geometry.spherical.interpolate(neMarker.getPosition(), seMarker.getPosition(), 0.5));
+		bottomMarker.setPosition(google.maps.geometry.spherical.interpolate(seMarker.getPosition(), swMarker.getPosition(), 0.5));
         centerMarker.setPosition(newBounds.getCenter());
         centerPreviousPos = centerMarker.getPosition();
         overlay.updateBounds(newBounds);
@@ -134,6 +241,10 @@ function addImage() {
         neMarker.setPosition(newPointNE);
         nwMarker.setPosition(new google.maps.LatLng(neMarker.getPosition().lat(), swMarker.getPosition().lng()));
         seMarker.setPosition(new google.maps.LatLng(swMarker.getPosition().lat(), neMarker.getPosition().lng()));
+ 		leftMarker.setPosition(google.maps.geometry.spherical.interpolate(nwMarker.getPosition(), swMarker.getPosition(), 0.5));
+		topMarker.setPosition(google.maps.geometry.spherical.interpolate(neMarker.getPosition(), nwMarker.getPosition(), 0.5));
+ 		rightMarker.setPosition(google.maps.geometry.spherical.interpolate(neMarker.getPosition(), seMarker.getPosition(), 0.5));
+		bottomMarker.setPosition(google.maps.geometry.spherical.interpolate(seMarker.getPosition(), swMarker.getPosition(), 0.5));
         centerPreviousPos = centerMarker.getPosition();
         var newBounds = new google.maps.LatLngBounds(newPointSW, newPointNE);
         overlay.updateBounds(newBounds);
@@ -237,6 +348,10 @@ window.addEventListener("message", function(e) {
 			neMarker.setMap(map);
 			nwMarker.setMap(map);
 			seMarker.setMap(map);
+			leftMarker.setMap(map);
+			topMarker.setMap(map);
+			rightMarker.setMap(map);
+			bottomMarker.setMap(map);
 			centerMarker.setMap(map);
 		} else {
 			overlay.setMap(null);
@@ -244,6 +359,10 @@ window.addEventListener("message", function(e) {
 			neMarker.setMap(null);
 			nwMarker.setMap(null);
 			seMarker.setMap(null);
+			leftMarker.setMap(null);
+			topMarker.setMap(null);
+			rightMarker.setMap(null);
+			bottomMarker.setMap(null);
 			centerMarker.setMap(null);
 		}
 	}
@@ -259,6 +378,10 @@ window.addEventListener("message", function(e) {
 		neMarker.setPosition(neBound);
 		nwMarker.setPosition(nwBound);
 		seMarker.setPosition(seBound);
+		leftMarker.setPosition(leftBound);
+		topMarker.setPosition(topBound);
+		rightMarker.setPosition(rightBound);
+		bottomMarker.setPosition(bottomBound);
 		centerMarker.setPosition(bounds.getCenter());
 		centerPreviousPos = centerMarker.getPosition();
 	}
@@ -275,12 +398,20 @@ window.addEventListener("message", function(e) {
 			neMarker.setMap(map);
 			nwMarker.setMap(map);
 			seMarker.setMap(map);
+			leftMarker.setMap(map);
+			topMarker.setMap(map);
+			rightMarker.setMap(map);
+			bottomMarker.setMap(map);
 			centerMarker.setMap(map);
 		} else {
 			swMarker.setMap(null);
 			neMarker.setMap(null);
 			nwMarker.setMap(null);
 			seMarker.setMap(null);
+			leftMarker.setMap(null);
+			topMarker.setMap(null);
+			rightMarker.setMap(null);
+			bottomMarker.setMap(null);
 			centerMarker.setMap(null);
 		}
 	}
