@@ -8,9 +8,14 @@ document.onreadystatechange = function(e) {
 				chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 					$(function() {
 						chrome.tabs.sendMessage(tabs[0].id, {action: 'overlayShowing'}, function(response) {
-							var showing = response.showing;
+							var overlayType = response.overlayType;
+							var showingCircle = response.showingCircle;
+							var showingImage = response.showingImage;
+							var currentRotation = response.currentRotation;
+							var showing = showingCircle || showingImage;
 							var ready = response.ready;
 							var handlesShowing = response.handlesShowing;
+							var imageUrl = response.imageUrl;
 							if (ready) {
 								$( "#not-ready" ).hide();
 								$( "#controls" ).show();
@@ -18,6 +23,29 @@ document.onreadystatechange = function(e) {
 								$( "#not-ready" ).show();
 								$( "#controls" ).hide();
 							}
+							$( "#imageUrl").on("click", function () { $(this).select(); });
+							function showCorrectControls(type) {
+								switch (type) {
+									case 'Circle': 
+										$('#circle-options').show();
+										$('#image-options').hide();
+										break;
+									case 'Image': 
+										$('#circle-options').hide();
+										$('#image-options').show();
+										break;								
+								}
+							}
+							$( "#overlay-type" ).selectmenu({
+								change: function( event, ui ) {
+									showCorrectControls(ui.item.value);
+								}
+							});
+							$("#overlay-type").val(overlayType);
+							$("#overlay-type").selectmenu("refresh");
+							showCorrectControls(overlayType);
+							console.log(imageUrl);
+							$( "#imageUrl" ).val(imageUrl);
 							$( "#opacity" ).slider({
 								max: 100,
 								min: 10,
@@ -49,15 +77,8 @@ document.onreadystatechange = function(e) {
 									event.preventDefault();
 									
 									chrome.tabs.sendMessage(tabs[0].id, {action: 'resetPosition'}, function(response) {});
+									$("#rotation").slider( "value", 0 );
 								});
-//							$( "#toggleCrosshairs" ).button({disabled:!showing, label:(crosshairsShowing) ? "Hide Crosshairs" : "Show Crosshairs"})
-//								.click(function( event ) {
-//									event.preventDefault();
-//									crosshairsShowing = !crosshairsShowing;
-//									bg.overlayData.showCrosshairs = crosshairsShowing;
-//									$( "#toggleCrosshairs" ).button( "option", "label", (crosshairsShowing) ? "Hide Crosshairs" : "Show Crosshairs" );
-//									chrome.tabs.sendMessage(tabs[0].id, {action: 'toggleCrosshairs'}, function(response) {});
-//								});
 							$( "#toggleHandles" ).button({disabled:!showing, label:(handlesShowing) ? "Hide Handles" : "Show Handles"})
 								.click(function( event ) {
 									event.preventDefault();
@@ -65,25 +86,63 @@ document.onreadystatechange = function(e) {
 									$( "#toggleHandles" ).button( "option", "label", (handlesShowing) ? "Hide Handles" : "Show Handles" );
 									chrome.tabs.sendMessage(tabs[0].id, {action: 'toggleHandles'}, function(response) {});
 								});
-							$( "#toggle" ).button({label:(showing) ? "Hide Overlay" : "Show Overlay"})
+							$( "#rotation" ).slider({
+								max: 720,
+								min: -720,
+								value: currentRotation,
+								disabled: !showingImage,
+								slide: function( event, ui ) {
+									chrome.tabs.sendMessage(tabs[0].id, {action: 'changeRotation', newValue: ui.value}, function(response) {});
+								}							
+							});
+							$( "#setImage" ).button({disabled:!showingImage})
 								.click(function( event ) {
 									event.preventDefault();
-									showing = !showing;
+									chrome.tabs.sendMessage(tabs[0].id, {action: 'setImage', newUrl: $("#imageUrl").val()}, function(response) {});
+								});
+							$( "#toggleCircle" ).button({label:(showingCircle) ? "Hide Overlay" : "Show Overlay"})
+								.click(function( event ) {
+									event.preventDefault();
+									showingCircle = !showingCircle;
+									showingImage = false;
+									$( "#toggleImage" ).button( "option", "label", "Show Overlay" );
+									$("#rotation").slider( "value", 0 );
+									showing = showingCircle || showingImage;
 
-									$( "#toggle" ).button( "option", "label", (showing) ? "Hide Overlay" : "Show Overlay" );
-									$( "#reset" ).button( "option", "disabled", !showing );
-									$( "#opacity" ).slider( "option", "disabled", !showing );
-									$( "#circle-width" ).slider( "option", "disabled", !showing );
-									$( "#circle-color" ).button( "option", "disabled", !showing );
-//									$( "#toggleCrosshairs" ).button( "option", "disabled", !showing );
-									$( "#toggleHandles" ).button( "option", "disabled", !showing );
+									$( "#toggleCircle" ).button( "option", "label", (showingCircle) ? "Hide Overlay" : "Show Overlay" );
+									$( "#reset" ).button( "option", "disabled", !showingCircle );
+									$( "#opacity" ).slider( "option", "disabled", !showingCircle );
+									$( "#circle-width" ).slider( "option", "disabled", !showingCircle );
+									$( "#circle-color" ).button( "option", "disabled", !showingCircle );
+									$( "#toggleHandles" ).button( "option", "disabled", !showingCircle );
 
-									chrome.tabs.sendMessage(tabs[0].id, {action: 'toggleVisibility',
+									chrome.tabs.sendMessage(tabs[0].id, {action: 'toggleCircleVisibility',
 																		 opacity: bg.overlayData.opacity,
 																		 circleWidth: bg.overlayData.circleWidth,
 																		 circleColor: bg.overlayData.circleColor
 																		 }, function(response) {});
 								});
+							$( "#toggleImage" ).button({label:(showingImage) ? "Hide Overlay" : "Show Overlay"})
+								.click(function( event ) {
+									event.preventDefault();
+									showingImage = !showingImage;
+									showingCircle = false;
+									$( "#toggleCircle" ).button( "option", "label", "Show Overlay" );
+									showing = showingCircle || showingImage;
+
+									$( "#toggleImage" ).button( "option", "label", (showingImage) ? "Hide Overlay" : "Show Overlay" );
+									$( "#reset" ).button( "option", "disabled", !showingImage );
+									$( "#opacity" ).slider( "option", "disabled", !showingImage );
+									$( "#rotation" ).slider( "option", "disabled", !showingImage );
+									$( "#setImage" ).button( "option", "disabled", !showingImage );
+									$( "#toggleHandles" ).button( "option", "disabled", !showingImage );
+
+									chrome.tabs.sendMessage(tabs[0].id, {action: 'toggleImageVisibility',
+																		 opacity: bg.overlayData.opacity,
+																		 imageUrl: $("#imageUrl").val()
+																		 }, function(response) {});
+								});
+							
 							window.addEventListener('unload', function() {
 								bg.overlayData.saveData();
 							});

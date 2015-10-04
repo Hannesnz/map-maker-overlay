@@ -14,17 +14,30 @@
 		<div style='margin: 10px; display:block'>Page not fully loaded, please try again...</div>
 	</div>
   	<div id='controls' style='display:none'>
-		<button id='toggle' style='display:block'></button>
+		<label for="overlay-type" style='margin-top: 10px; margin-bottom: 5px; display:block'>Select type of overlay:</label>
+		<select name="overlay-type" id="overlay-type" style='margin-top: 10px; display:block; width: 150px'>
+			<option selected="selected">Circle</option>
+			<option>Image</option>
+		</select>
 		<div id='circle-options'>
-			<button id='reset' style='margin-top: 10px; display:block'>Reset Position</button>
-			<div style='margin-top: 10px; margin-bottom: 5px; display:block'>Opacity:</div>
-			<div id='opacity'></div>
+			<button id='toggleCircle'  style='margin-top: 10px; display:block'></button>
 			<div style='margin-top: 10px; margin-bottom: 5px; display:block'>Circle Width:</div>
 			<div id='circle-width'></div>
 			<div style='margin-top: 10px; margin-bottom: 5px; display:block'>Circle Color:</div>
 			<div style='display:block'><input type="color" id='circle-color'> </div>
-			<button style='margin-top: 10px; margin-bottom:10px; display:block' id='toggleHandles' style='display:block'></button>
 		</div>
+		<div id='image-options' style='display:none'>
+			<label for="imageUrl" style='margin-top: 10px; margin-bottom: 5px; display:block'>Image URL: </label>
+			<input id='imageUrl' type="text" style='margin-bottom: 10px; margin-right: 10px; width:100%; display:block'>
+			<button id='toggleImage'  style='margin-top: 10px'></button>
+			<button id='setImage'  style='margin-top: 10px'>Update Image</button>
+			<div style='margin-top: 10px; margin-bottom: 5px; display:block'>Rotation:</div>
+			<div id='rotation'></div>
+		</div>
+		<button id='reset' style='margin-top: 10px; display:block'>Reset Position</button>
+		<div style='margin-top: 10px; margin-bottom: 5px; display:block'>Opacity:</div>
+		<div id='opacity'></div>
+		<button style='margin-top: 10px; margin-bottom:10px; display:block' id='toggleHandles' style='display:block'></button>
 	</div>
   </body>
 </html>
