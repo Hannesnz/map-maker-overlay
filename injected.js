@@ -302,20 +302,27 @@ SizeableOverlay.prototype.onRemove = function () {
     this.div_ = null;
 };
 
-function findMap(parent) {
-    props = Object.getOwnPropertyNames(parent);
-    for (i = 0; i <= props.length - 1; i++) {
-        subProps = Object.getOwnPropertyNames(parent[props[i]]);
-        for (j = 0; j <= subProps.length - 1; j++) {
-            if (parent[props[i]][subProps[j]] instanceof google.maps.Map) {
-                return parent[props[i]][subProps[j]]
-            }
-        }
-    }
+function findMap(F) {
+	for (func in F) {
+		if (func.length == 3 && typeof F[func] == "function") {
+			parent = F[func]();
+			if (parent != null)	{
+				props = Object.getOwnPropertyNames(parent);
+				for (i = 0; i <= props.length - 1; i++) {
+					subProps = Object.getOwnPropertyNames(parent[props[i]]);
+					for (j = 0; j <= subProps.length - 1; j++) {
+						if (parent[props[i]][subProps[j]] instanceof google.maps.Map) {
+							return parent[props[i]][subProps[j]]
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 function getMap() {
-    map = findMap(gGeowikiApplication.F.aMa());
+    map = findMap(gGeowikiApplication.F);
 }
 getMap();
 var circle = null;
