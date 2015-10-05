@@ -2,8 +2,8 @@
   "manifest_version": 2,
 
   "name": "Map Maker Overlay",
-  "description": "Overlay a circle or other images on Google Map Maker to make it easier to draw circles (such as roundabouts) or overlay images",
-  "version": "2.0",
+  "description": "Overlay a circle, image or KML on Google Map Maker",
+  "version": "2.1",
   "background": {
     "scripts": ["background.js"],
     "persistent": true

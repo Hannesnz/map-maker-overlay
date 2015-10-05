@@ -11,11 +11,13 @@ document.onreadystatechange = function(e) {
 							var overlayType = response.overlayType;
 							var showingCircle = response.showingCircle;
 							var showingImage = response.showingImage;
+							var showingKml = response.showingKml;
 							var currentRotation = response.currentRotation;
-							var showing = showingCircle || showingImage;
+							var showing = showingCircle || showingImage || showingKml;
 							var ready = response.ready;
 							var handlesShowing = response.handlesShowing;
 							var imageUrl = response.imageUrl;
+							var kmlUrl = response.kmlUrl;
 							if (ready) {
 								$( "#not-ready" ).hide();
 								$( "#controls" ).show();
@@ -24,15 +26,26 @@ document.onreadystatechange = function(e) {
 								$( "#controls" ).hide();
 							}
 							$( "#imageUrl").on("click", function () { $(this).select(); });
+							$( "#kmlUrl").on("click", function () { $(this).select(); });
 							function showCorrectControls(type) {
 								switch (type) {
 									case 'Circle': 
 										$('#circle-options').show();
 										$('#image-options').hide();
+										$('#kml-options').hide();
+										$('#non-kml-options').show();
 										break;
 									case 'Image': 
 										$('#circle-options').hide();
 										$('#image-options').show();
+										$('#kml-options').hide();
+										$('#non-kml-options').show();
+										break;								
+									case 'KML': 
+										$('#circle-options').hide();
+										$('#image-options').hide();
+										$('#kml-options').show();
+										$('#non-kml-options').hide();
 										break;								
 								}
 							}
@@ -44,8 +57,8 @@ document.onreadystatechange = function(e) {
 							$("#overlay-type").val(overlayType);
 							$("#overlay-type").selectmenu("refresh");
 							showCorrectControls(overlayType);
-							console.log(imageUrl);
 							$( "#imageUrl" ).val(imageUrl);
+							$( "#kmlUrl" ).val(kmlUrl);
 							$( "#opacity" ).slider({
 								max: 100,
 								min: 10,
@@ -95,19 +108,44 @@ document.onreadystatechange = function(e) {
 									chrome.tabs.sendMessage(tabs[0].id, {action: 'changeRotation', newValue: ui.value}, function(response) {});
 								}							
 							});
+							$("#imageUrl").keyup(function(event){
+								if(event.keyCode == 13){
+									if ($('#setImage').is(':disabled')) {
+										$("#toggleImage").click();
+									} else {
+										$("#setImage").click();
+									}
+								}
+							});
+							$("#kmlUrl").keyup(function(event){
+								if(event.keyCode == 13){
+									if ($('#setKml').is(':disabled')) {
+										$("#toggleKml").click();
+									} else {
+										$("#setKml").click();
+									}
+								}
+							});
 							$( "#setImage" ).button({disabled:!showingImage})
 								.click(function( event ) {
 									event.preventDefault();
 									chrome.tabs.sendMessage(tabs[0].id, {action: 'setImage', newUrl: $("#imageUrl").val()}, function(response) {});
+								});
+							$( "#setKml" ).button({disabled:!showingKml})
+								.click(function( event ) {
+									event.preventDefault();
+									chrome.tabs.sendMessage(tabs[0].id, {action: 'setKml', newUrl: $("#kmlUrl").val()}, function(response) {});
 								});
 							$( "#toggleCircle" ).button({label:(showingCircle) ? "Hide Overlay" : "Show Overlay"})
 								.click(function( event ) {
 									event.preventDefault();
 									showingCircle = !showingCircle;
 									showingImage = false;
+									showingKml = false;
 									$( "#toggleImage" ).button( "option", "label", "Show Overlay" );
+									$( "#toggleKml" ).button( "option", "label", "Show Overlay" );
 									$("#rotation").slider( "value", 0 );
-									showing = showingCircle || showingImage;
+									showing = showingCircle || showingImage || showingKml;
 
 									$( "#toggleCircle" ).button( "option", "label", (showingCircle) ? "Hide Overlay" : "Show Overlay" );
 									$( "#reset" ).button( "option", "disabled", !showingCircle );
@@ -127,8 +165,10 @@ document.onreadystatechange = function(e) {
 									event.preventDefault();
 									showingImage = !showingImage;
 									showingCircle = false;
+									showingKml = false;
 									$( "#toggleCircle" ).button( "option", "label", "Show Overlay" );
-									showing = showingCircle || showingImage;
+									$( "#toggleKml" ).button( "option", "label", "Show Overlay" );
+									showing = showingCircle || showingImage || showingKml;
 
 									$( "#toggleImage" ).button( "option", "label", (showingImage) ? "Hide Overlay" : "Show Overlay" );
 									$( "#reset" ).button( "option", "disabled", !showingImage );
@@ -142,6 +182,23 @@ document.onreadystatechange = function(e) {
 																		 imageUrl: $("#imageUrl").val()
 																		 }, function(response) {});
 								});
+							$( "#toggleKml" ).button({label:(showingKml) ? "Hide Overlay" : "Show Overlay"})
+								.click(function( event ) {
+									event.preventDefault();
+									showingKml = !showingKml;
+									showingCircle = false;
+									showingImage = false;
+									$( "#toggleCircle" ).button( "option", "label", "Show Overlay" );
+									$( "#toggleImage" ).button( "option", "label", "Show Overlay" );
+									showing = showingCircle || showingImage || showingKml;
+
+									$( "#toggleKml" ).button( "option", "label", (showingKml) ? "Hide Overlay" : "Show Overlay" );
+									$( "#setKml" ).button( "option", "disabled", !showingKml );
+									
+									chrome.tabs.sendMessage(tabs[0].id, {action: 'toggleKmlVisibility',
+																		 kmlUrl: $("#kmlUrl").val()
+																		 }, function(response) {});
+								});
 							
 							window.addEventListener('unload', function() {
 								bg.overlayData.saveData();
@@ -153,3 +210,27 @@ document.onreadystatechange = function(e) {
 		});
 	}
 };
+
+chrome.runtime.onMessage.addListener(
+	function(request, sender, sendResponse) {
+		if (request.action === 'displayKmlStatusMessage') {
+			if (request.status == 'OK')	{
+				$('label[for="kmlError"]').css('display', 'none');
+			} else {
+				var engMessage;
+				switch (request.status) {
+					case 'DOCUMENT_NOT_FOUND': engMessage = 'The document could not be found. Most likely it is an invalid URL, or the document is not publicly available.'; break;
+					case 'DOCUMENT_TOO_LARGE': engMessage = 'The document exceeds the file size limits of KmlLayer.'; break;
+					case 'FETCH_ERROR': engMessage = 'The document could not be fetched.'; break;
+					case 'INVALID_DOCUMENT': engMessage = 'The document is not a valid KML, KMZ or GeoRSS document.'; break;
+					case 'INVALID_REQUEST': engMessage = 'The KmlLayer is invalid.'; break;
+					case 'LIMITS_EXCEEDED': engMessage = 'The document exceeds the feature limits of KmlLayer.'; break;
+					case 'TIMED_OUT': engMessage = 'The document could not be loaded within a reasonable amount of time.'; break;
+					case 'UNKNOWN': engMessage = 'The document failed to load for an unknown reason.'; break;
+				}
+				$('label[for="kmlError"]').text(engMessage);
+				$('label[for="kmlError"]').css('display', 'block');
+			}
+		}
+	}
+);

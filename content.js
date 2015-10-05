@@ -1,6 +1,7 @@
 var ready = false;
 var showingCircle = false;
 var showingImage = false;
+var showingKml = false;
 var overlayType = 'Circle';
 var handlesShowing = true;
 var circleWidth;
@@ -9,6 +10,7 @@ var currentRotation;
 var opacity;
 var rotation;
 var imageUrl;
+var kmlUrl;
 
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
@@ -33,19 +35,28 @@ chrome.runtime.onMessage.addListener(
 		} else if (request.action === 'setImage') {
 			imageUrl = request.newUrl;
 			window.postMessage({action: 'setImage', newUrl: request.newUrl}, '*');
+		} else if (request.action === 'setKml') {
+			kmlUrl = request.newUrl;
+			window.postMessage({action: 'setKml', newUrl: request.newUrl}, '*');
 		} else if (request.action === 'overlayShowing') {
 			sendResponse({'showingCircle': showingCircle,
 						  'showingImage': showingImage,
+						  'showingKml': showingKml,
 						  'overlayType': overlayType,	
 						  'handlesShowing' : handlesShowing,
 						  'currentRotation' : currentRotation,
 						  'ready' : ready,
-						  'imageUrl': imageUrl});
+						  'imageUrl': imageUrl,
+						  'kmlUrl': kmlUrl});
 		} else if (request.action === 'toggleCircleVisibility') {
 			overlayType = 'Circle';
 			if (showingImage) {
 				showingImage = false;
 				window.postMessage({action: 'toggleShowImage'}, '*');
+			}
+			if (showingKml) {
+				showingKml = false;
+				window.postMessage({action: 'toggleShowKml'}, '*');
 			}
 			showingCircle = !showingCircle;
 			circleWidth = request.circleWidth;
@@ -58,13 +69,37 @@ chrome.runtime.onMessage.addListener(
 				showingCircle = false;
 				window.postMessage({action: 'toggleShowCircle'}, '*');
 			}
+			if (showingKml) {
+				showingKml = false;
+				window.postMessage({action: 'toggleShowKml'}, '*');
+			}
 			showingImage = !showingImage;
 			opacity = request.opacity;
 			imageUrl = request.imageUrl;
 			window.postMessage({action: 'toggleShowImage', imageUrl: request.imageUrl, opacity: request.opacity}, '*');
+		} else if (request.action === 'toggleKmlVisibility') {
+			overlayType = 'KML';
+			if (showingCircle) {
+				showingCircle = false;
+				window.postMessage({action: 'toggleShowCircle'}, '*');
+			}
+			if (showingImage) {
+				showingImage = false;
+				window.postMessage({action: 'toggleShowImage'}, '*');
+			}
+			showingKml = !showingKml;
+			kmlUrl = request.kmlUrl;
+			window.postMessage({action: 'toggleShowKml', kmlUrl: request.kmlUrl}, '*');
 		}
 	}
 );
+
+window.addEventListener("message", function (e) {
+	if (e.data.action === 'displayKmlStatusMessage') {
+		console.log('passingthru:' + e.data.status);
+		chrome.runtime.sendMessage({action:'displayKmlStatusMessage', status: e.data.status});
+	}
+});
 
 function injectJs(link) {
 	var scr = document.createElement('script');
