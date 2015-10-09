@@ -251,6 +251,8 @@ function addImage() {
         var newBounds = new google.maps.LatLngBounds(newPointSW, newPointNE);
         overlay.updateBounds(newBounds);
     });
+
+	return true;
 }
 
 function SizeableOverlay(bounds, image, map) {
@@ -449,8 +451,41 @@ window.addEventListener("message", function (e) {
             }
         }
     } else if (e.data.action === 'setImage') {
-        overlay.image_ = e.data.newUrl;
-        imgOverlay.src = e.data.newUrl;
+        imgSrc = e.data.imageUrl;
+		if (overlay == null) {
+			addImage()
+		}
+		var checkExist = setInterval(function() {
+			if (imgOverlay !=  null) {
+				clearInterval(checkExist);
+				overlay.image_ = imgSrc;
+				imgOverlay.src = imgSrc;
+				if (e.data.hasOwnProperty('opacity')) {
+					overlayOpacity = e.data.opacity;
+					imgOverlay.style.opacity = overlayOpacity;
+				}
+				if (e.data.hasOwnProperty('rotation')) {
+					imgOverlay.style.transform = 'rotate(' + e.data.rotation / 8 + 'deg)';
+				}
+				if (e.data.hasOwnProperty('neLat')) {
+					var newPointSW = new google.maps.LatLng(e.data.swLat, e.data.swLng);
+					var newPointNE = new google.maps.LatLng(e.data.neLat, e.data.neLng);
+					swMarker.setPosition(newPointSW);
+					neMarker.setPosition(newPointNE);
+					nwMarker.setPosition(new google.maps.LatLng(neMarker.getPosition().lat(), swMarker.getPosition().lng()));
+					seMarker.setPosition(new google.maps.LatLng(swMarker.getPosition().lat(), neMarker.getPosition().lng()));
+					leftMarker.setPosition(google.maps.geometry.spherical.interpolate(nwMarker.getPosition(), swMarker.getPosition(), 0.5));
+					topMarker.setPosition(google.maps.geometry.spherical.interpolate(neMarker.getPosition(), nwMarker.getPosition(), 0.5));
+					rightMarker.setPosition(google.maps.geometry.spherical.interpolate(neMarker.getPosition(), seMarker.getPosition(), 0.5));
+					bottomMarker.setPosition(google.maps.geometry.spherical.interpolate(seMarker.getPosition(), swMarker.getPosition(), 0.5));
+					var newBounds = new google.maps.LatLngBounds(newPointSW, newPointNE);
+					centerMarker.setPosition(newBounds.getCenter());
+					centerPreviousPos = centerMarker.getPosition();
+					overlay.updateBounds(newBounds);
+					map.fitBounds(newBounds);
+				}
+			}
+		}, 100);
     } else if (e.data.action === 'setKml') {
         kmlSrc = e.data.newUrl;
         kmlOverlay.setUrl(e.data.newUrl);
@@ -465,6 +500,13 @@ window.addEventListener("message", function (e) {
         }
     } else if (e.data.action === 'changeRotation') {
         imgOverlay.style.transform = 'rotate(' + e.data.newValue / 8 + 'deg)';
+    } else if (e.data.action === 'getSaveInfo') {
+        window.postMessage({action: 'sendSaveInfo', 
+							neLat: neMarker.getPosition().lat(),
+							neLng: neMarker.getPosition().lng(),
+							swLat: swMarker.getPosition().lat(),
+							swLng: swMarker.getPosition().lng(),
+							saveAs: e.data.saveAs}, '*');
     } else if (e.data.action === 'changeCircleWidth') {
         circle.setOptions({
             strokeWeight: e.data.newValue
