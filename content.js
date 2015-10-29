@@ -33,6 +33,8 @@ chrome.runtime.onMessage.addListener(
 			window.postMessage({action: 'toggleHandles'}, '*');
 		} else if (request.action === 'getSaveInfo') {
 			window.postMessage({action: 'getSaveInfo', saveAs: request.saveAs}, '*');
+		} else if (request.action === 'showTerrain') {
+			window.postMessage({action: 'showTerrain'}, '*');
 		} else if (request.action === 'setImage') {
 			overlayType = 'Image';
 			if (showingCircle) {
@@ -100,7 +102,7 @@ chrome.runtime.onMessage.addListener(
 				currentRotation = 0;
 			}
 			imageUrl = request.imageUrl;
-			window.postMessage({action: 'toggleShowImage', imageUrl: request.imageUrl, opacity: request.opacity}, '*');
+			window.postMessage({action: 'toggleShowImage', imageUrl: request.imageUrl, opacity: request.opacity, rotation: currentRotation}, '*');
 		} else if (request.action === 'toggleKmlVisibility') {
 			overlayType = 'KML';
 			if (showingCircle) {

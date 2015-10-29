@@ -387,6 +387,14 @@ window.addEventListener("message", function (e) {
                 rightMarker.setMap(map);
                 bottomMarker.setMap(map);
                 centerMarker.setMap(map);
+				var checkExist = setInterval(function() {
+					if (imgOverlay !=  null) {
+						clearInterval(checkExist);
+						if (e.data.hasOwnProperty('rotation')) {
+							imgOverlay.style.transform = 'rotate(' + e.data.rotation / 8 + 'deg)';
+						}
+					}
+				}, 20);
             } else {
                 overlay.setMap(null);
                 swMarker.setMap(null);
@@ -498,6 +506,8 @@ window.addEventListener("message", function (e) {
             overlayOpacity = e.data.newValue;
             imgOverlay.style.opacity = overlayOpacity;
         }
+    } else if (e.data.action === 'showTerrain') {
+        map.setMapTypeId(google.maps.MapTypeId.TERRAIN);
     } else if (e.data.action === 'changeRotation') {
         imgOverlay.style.transform = 'rotate(' + e.data.newValue / 8 + 'deg)';
     } else if (e.data.action === 'getSaveInfo') {

@@ -47,6 +47,7 @@ document.onreadystatechange = function (e) {
                             function showCorrectControls(type) {
                                 switch (type) {
                                     case 'Circle':
+                                        $('#terrain-options').hide();
                                         $('#circle-options').show();
                                         $('#image-options').hide();
                                         $('#kml-options').hide();
@@ -54,6 +55,7 @@ document.onreadystatechange = function (e) {
                                         $('#showSaves').hide();
                                         break;
                                     case 'Image':
+										$('#terrain-options').hide();
                                         $('#circle-options').hide();
                                         $('#image-options').show();
                                         $('#kml-options').hide();
@@ -61,24 +63,57 @@ document.onreadystatechange = function (e) {
                                         $('#showSaves').show();
                                         break;
                                     case 'KML':
+										$('#terrain-options').hide();
                                         $('#circle-options').hide();
                                         $('#image-options').hide();
                                         $('#kml-options').show();
                                         $('#non-kml-options').hide();
                                         $('#showSaves').hide();
                                         break;
+                                    case 'Terrain':
+										$('#terrain-options').show();
+                                        $('#circle-options').hide();
+                                        $('#image-options').hide();
+                                        $('#kml-options').hide();
+                                        $('#non-kml-options').hide();
+                                        $('#showSaves').hide();
+                                        break;
                                 }
                             }
-                            $("#overlay-type").selectmenu({
-                                change: function (event, ui) {
-                                    showCorrectControls(ui.item.value);
-                                    if (showingSaves) {
-                                        $("#showSaves").click();
-                                    }
-                                }
-                            });
-                            $("#overlay-type").val(overlayType);
-                            $("#overlay-type").selectmenu("refresh");
+							$("#overlay-type").buttonset();
+							$("#" + overlayType).prop('checked', true).button('refresh');
+							$("#Circle").button().click(function (event) {
+                                event.preventDefault();
+								overlayType = 'Circle';
+								showCorrectControls(overlayType);
+								if (showingSaves) {
+									$("#showSaves").click();
+								}							
+							});
+							$("#Image").button().click(function (event) {
+                                event.preventDefault();
+								overlayType = 'Image';
+								showCorrectControls(overlayType);
+								if (showingSaves) {
+									$("#showSaves").click();
+								}							
+							});
+							$("#KML").button().click(function (event) {
+                                event.preventDefault();
+								overlayType = 'KML';
+								showCorrectControls(overlayType);
+								if (showingSaves) {
+									$("#showSaves").click();
+								}							
+							});
+							$("#Terrain").button().click(function (event) {
+                                event.preventDefault();
+								overlayType = 'Terrain';
+								showCorrectControls(overlayType);
+								if (showingSaves) {
+									$("#showSaves").click();
+								}							
+							});
                             showCorrectControls(overlayType);
                             $("#imageUrl").val(imageUrl);
                             $("#kmlUrl").val(kmlUrl);
@@ -315,6 +350,15 @@ document.onreadystatechange = function (e) {
                                     $("#saved-images").hide();
                                 }
                             });
+                            $("#showTerrain").button({
+                                label: "Show Terrain"
+                            })
+                                .click(function (event) {
+                                event.preventDefault();
+                                chrome.tabs.sendMessage(tabs[0].id, {
+                                    action: 'showTerrain',
+                                }, function (response) {});
+							});
                             $("#toggleCircle").button({
                                 label: (showingCircle) ? "Hide Overlay" : "Show Overlay"
                             })
