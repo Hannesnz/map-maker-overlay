@@ -3,7 +3,7 @@
 
   "name": "Map Maker Overlay",
   "description": "Overlay a circle, image, KML or Terrain on Google Map Maker",
-  "version": "2.5",
+  "version": "2.6",
   "background": {
     "scripts": ["background.js"],
     "persistent": true

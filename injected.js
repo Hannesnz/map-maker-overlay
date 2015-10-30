@@ -304,6 +304,60 @@ SizeableOverlay.prototype.onRemove = function () {
     this.div_ = null;
 };
 
+function TerrainControl(controlDiv, map) {
+
+    var controlUI = document.createElement('div');
+    controlUI.style.backgroundColor = '#fff';
+    controlUI.style.border = '2px solid #fff';
+    controlUI.style.borderRadius = '3px';
+    controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+    controlUI.style.cursor = 'pointer';
+    controlUI.style.marginBottom = '15px';
+    controlUI.style.marginTop = '22px';
+    controlUI.style.textAlign = 'center';
+    controlUI.title = 'Show street map with terrain';
+    controlDiv.appendChild(controlUI);
+
+    var terrainCheck = document.createElement('input');
+    terrainCheck.type = "checkbox";
+    terrainCheck.id = "terrainCheck";
+    var terrainLabel = document.createElement('label');
+    terrainLabel.innerHTML = "Terrain";
+    terrainLabel.style.fontFamily = 'Roboto,Arial,sans-serif';
+    terrainLabel.style.fontSize = '12px';
+    terrainLabel.style.paddingRight = '5px';
+    terrainLabel.style.verticalAlign = '2px';
+    controlUI.appendChild(terrainCheck);
+    controlUI.appendChild(terrainLabel);
+
+    controlUI.addEventListener('click', function () {
+        if (map.getMapTypeId() == google.maps.MapTypeId.TERRAIN) {
+            map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+            terrainCheck.checked = false;
+        } else if (map.getMapTypeId() == google.maps.MapTypeId.ROADMAP) {
+            map.setMapTypeId(google.maps.MapTypeId.TERRAIN);
+            terrainCheck.checked = true;
+        }
+    });
+
+    if (map.getMapTypeId() == google.maps.MapTypeId.SATELLITE || map.getMapTypeId() == google.maps.MapTypeId.HYBRID) {
+        terrainCheck.disabled = true;
+        terrainLabel.style.color = 'gray';
+        terrainCheck.checked = false;
+	}
+
+    map.addListener('maptypeid_changed', function () {
+        if (map.getMapTypeId() == google.maps.MapTypeId.SATELLITE || map.getMapTypeId() == google.maps.MapTypeId.HYBRID) {
+            terrainCheck.disabled = true;
+            terrainLabel.style.color = 'gray';
+            terrainCheck.checked = false;
+        } else {
+            terrainLabel.style.color = 'black';
+            terrainCheck.disabled = false;
+        }
+    });
+}
+
 function findMap(F) {
 	for (func in F) {
 		if (func.length == 3 && typeof F[func] == "function") {
@@ -325,14 +379,14 @@ function findMap(F) {
 
 function getMap() {
     map = findMap(gGeowikiApplication.F);
-	map.setOptions({
-      mapTypeControlOptions: {
-        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-        position: google.maps.ControlPosition.TOP_LEFT
-      },
-      mapTypeControl: true
-    });
+
+	var terrainControlDiv = document.createElement('div');
+    var terrainControl = new TerrainControl(terrainControlDiv, map);
+
+    terrainControlDiv.index = 1;
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(terrainControlDiv);
 }
+
 getMap();
 var circle = null;
 var usingCircle
