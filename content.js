@@ -33,8 +33,6 @@ chrome.runtime.onMessage.addListener(
 			window.postMessage({action: 'toggleHandles'}, '*');
 		} else if (request.action === 'getSaveInfo') {
 			window.postMessage({action: 'getSaveInfo', saveAs: request.saveAs}, '*');
-		} else if (request.action === 'showTerrain') {
-			window.postMessage({action: 'showTerrain'}, '*');
 		} else if (request.action === 'setImage') {
 			overlayType = 'Image';
 			if (showingCircle) {

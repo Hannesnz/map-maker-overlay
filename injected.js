@@ -279,7 +279,7 @@ SizeableOverlay.prototype.onAdd = function () {
     div.appendChild(imgOverlay);
     this.div_ = div;
     var panes = this.getPanes();
-    panes.overlayLayer.appendChild(div);
+    panes.mapPane.appendChild(div);
 };
 
 SizeableOverlay.prototype.draw = function () {
@@ -325,6 +325,13 @@ function findMap(F) {
 
 function getMap() {
     map = findMap(gGeowikiApplication.F);
+	map.setOptions({
+      mapTypeControlOptions: {
+        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+        position: google.maps.ControlPosition.TOP_LEFT
+      },
+      mapTypeControl: true
+    });
 }
 getMap();
 var circle = null;
@@ -506,8 +513,6 @@ window.addEventListener("message", function (e) {
             overlayOpacity = e.data.newValue;
             imgOverlay.style.opacity = overlayOpacity;
         }
-    } else if (e.data.action === 'showTerrain') {
-        map.setMapTypeId(google.maps.MapTypeId.TERRAIN);
     } else if (e.data.action === 'changeRotation') {
         imgOverlay.style.transform = 'rotate(' + e.data.newValue / 8 + 'deg)';
     } else if (e.data.action === 'getSaveInfo') {
