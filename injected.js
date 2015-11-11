@@ -378,7 +378,7 @@ function findMap(F) {
 }
 
 function getMap() {
-    map = findMap(gGeowikiApplication.F);
+    map = findMap(gGeowikiApplication.D);
 
 	var terrainControlDiv = document.createElement('div');
     var terrainControl = new TerrainControl(terrainControlDiv, map);
