@@ -314,6 +314,7 @@ function TerrainControl(controlDiv, map) {
     controlUI.style.cursor = 'pointer';
     controlUI.style.marginBottom = '15px';
     controlUI.style.marginTop = '22px';
+	controlUI.style.marginLeft = '22px';
     controlUI.style.textAlign = 'center';
     controlUI.title = 'Show street map with terrain';
     controlDiv.appendChild(controlUI);
@@ -378,13 +379,19 @@ function findMap(F) {
 }
 
 function getMap() {
-    map = findMap(gGeowikiApplication.D);
+	var checkExist = setInterval(function() {
+		map = findMap(gGeowikiApplication.D);
+		if (map !=  null) {
+			clearInterval(checkExist);
+			var terrainControlDiv = document.createElement('div');
+			var terrainControl = new TerrainControl(terrainControlDiv, map);
 
-	var terrainControlDiv = document.createElement('div');
-    var terrainControl = new TerrainControl(terrainControlDiv, map);
+			terrainControlDiv.index = 1;
+			map.controls[google.maps.ControlPosition.TOP_LEFT].push(terrainControlDiv);
 
-    terrainControlDiv.index = 1;
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(terrainControlDiv);
+			window.postMessage({action: 'mapFound'}, '*');
+		}
+	}, 300);
 }
 
 getMap();

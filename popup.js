@@ -27,6 +27,7 @@ document.onreadystatechange = function (e) {
                             var imageUrl = response.imageUrl;
                             var kmlUrl = response.kmlUrl;
                             var showingSaves = false;
+							var googleDriveId = /(\/d\/)([^\/]+)(?=\/)|(id\=)([^\/]+)(?=\/|)/i;
                             for (var i = 0; i < bg.overlayData.savedImages.length; i++) {
                                 $('#images-saved').append(new Option(bg.overlayData.savedImages[i].name));
                             }
@@ -186,11 +187,36 @@ document.onreadystatechange = function (e) {
                                     }
                                 }
                             });
+							function parseGoogleDriveLink() {
+								if ($("#imageUrl").val().search("drive.google")) {
+									var result = googleDriveId.exec($("#imageUrl").val());
+									if (result[0] != '') {
+										if (result[2] != undefined) {
+											$("#imageUrl").val("https://drive.google.com/uc?export=download&id=" + result[2]);
+										} else {
+											$("#imageUrl").val("https://drive.google.com/uc?export=download&id=" + result[4]);
+										}
+									}
+								}
+							}
+							function parseKmlGoogleDriveLink() {
+								if ($("#kmlUrl").val().search("drive.google")) {
+									var result = googleDriveId.exec($("#kmlUrl").val());
+									if (result[0] != '') {
+										if (result[2] != undefined) {
+											$("#kmlUrl").val("https://drive.google.com/uc?export=download&id=" + result[2]);
+										} else {
+											$("#kmlUrl").val("https://drive.google.com/uc?export=download&id=" + result[4]);
+										}
+									}
+								}
+							}
                             $("#setImage").button({
                                 disabled: !showingImage
                             })
                                 .click(function (event) {
                                 event.preventDefault();
+								parseGoogleDriveLink();
                                 chrome.tabs.sendMessage(tabs[0].id, {
                                     action: 'setImage',
                                     imageUrl: $("#imageUrl").val()
@@ -201,6 +227,7 @@ document.onreadystatechange = function (e) {
                             })
                                 .click(function (event) {
                                 event.preventDefault();
+								parseKmlGoogleDriveLink();
                                 chrome.tabs.sendMessage(tabs[0].id, {
                                     action: 'setKml',
                                     newUrl: $("#kmlUrl").val()
@@ -381,6 +408,8 @@ document.onreadystatechange = function (e) {
                                 event.preventDefault();
 								setImageShowing(!showingImage);
 
+								parseGoogleDriveLink();
+
                                 chrome.tabs.sendMessage(tabs[0].id, {
                                     action: 'toggleImageVisibility',
                                     opacity: bg.overlayData.opacity,
@@ -401,6 +430,8 @@ document.onreadystatechange = function (e) {
 
                                 $("#toggleKml").button("option", "label", (showingKml) ? "Hide Overlay" : "Show Overlay");
                                 $("#setKml").button("option", "disabled", !showingKml);
+
+								parseKmlGoogleDriveLink();
 
                                 chrome.tabs.sendMessage(tabs[0].id, {
                                     action: 'toggleKmlVisibility',

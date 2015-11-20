@@ -121,6 +121,8 @@ chrome.runtime.onMessage.addListener(
 window.addEventListener("message", function (e) {
 	if (e.data.action === 'displayKmlStatusMessage') {
 		chrome.runtime.sendMessage({action:'displayKmlStatusMessage', status: e.data.status});
+	} else if (e.data.action === 'mapFound') {
+		ready = true;
 	} else if (e.data.action === 'sendSaveInfo') {
 		chrome.runtime.sendMessage({action:'sendSaveInfo',
 									neLat: e.data.neLat,
@@ -141,9 +143,4 @@ function injectJs(link) {
 	document.getElementsByTagName('head')[0].appendChild(scr)
 }
 
-document.onreadystatechange = function(e) {
-	if (document.readyState === 'complete') {
-		ready = true;
-		injectJs(chrome.extension.getURL('injected.js'));
-	}
-};
+injectJs(chrome.extension.getURL('injected.js'));
