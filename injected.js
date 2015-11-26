@@ -396,12 +396,10 @@ function getMap() {
 
 getMap();
 var circle = null;
-var usingCircle
 var overlayOpacity;
 var imgOverlay;
 window.addEventListener("message", function (e) {
     if (e.data.action === 'toggleShowCircle') {
-        usingCircle = true;
         if (circle == null) {
             circle = new google.maps.Circle({
                 strokeColor: e.data.circleColor,
@@ -417,7 +415,6 @@ window.addEventListener("message", function (e) {
             circle.setVisible(!circle.getVisible());
         }
     } else if (e.data.action === 'toggleShowKml') {
-        usingCircle = false;
 		kmlSrc = e.data.kmlUrl;
         if (kmlOverlay == null) {
 		    kmlOverlay = new google.maps.KmlLayer({
@@ -438,7 +435,6 @@ window.addEventListener("message", function (e) {
 			}
         }
     } else if (e.data.action === 'toggleShowImage') {
-        usingCircle = false;
         imgSrc = e.data.imageUrl;
         if (overlay == null) {
             overlayOpacity = e.data.opactiy;
@@ -476,56 +472,51 @@ window.addEventListener("message", function (e) {
                 centerMarker.setMap(null);
             }
         }
-    } else if (e.data.action === 'resetPosition') {
-        if (usingCircle) {
-            circle.setOptions({
-                center: map.getCenter(),
-                radius: google.maps.geometry.spherical.computeDistanceBetween(map.getBounds().getNorthEast(), map.getBounds().getCenter()) / 3
-            });
-        } else {
-            resetBounds();
-            overlay.updateBounds(bounds);
-            swMarker.setPosition(swBound);
-            neMarker.setPosition(neBound);
-            nwMarker.setPosition(nwBound);
-            seMarker.setPosition(seBound);
-            leftMarker.setPosition(leftBound);
-            topMarker.setPosition(topBound);
-            rightMarker.setPosition(rightBound);
-            bottomMarker.setPosition(bottomBound);
-            centerMarker.setPosition(bounds.getCenter());
-            centerPreviousPos = centerMarker.getPosition();
-        }
+    } else if (e.data.action === 'resetCirclePosition') {
+		circle.setOptions({
+			center: map.getCenter(),
+			radius: google.maps.geometry.spherical.computeDistanceBetween(map.getBounds().getNorthEast(), map.getBounds().getCenter()) / 3
+		});
+    } else if (e.data.action === 'resetImagePosition') {
+		resetBounds();
+		overlay.updateBounds(bounds);
+		swMarker.setPosition(swBound);
+		neMarker.setPosition(neBound);
+		nwMarker.setPosition(nwBound);
+		seMarker.setPosition(seBound);
+		leftMarker.setPosition(leftBound);
+		topMarker.setPosition(topBound);
+		rightMarker.setPosition(rightBound);
+		bottomMarker.setPosition(bottomBound);
+		centerMarker.setPosition(bounds.getCenter());
+		centerPreviousPos = centerMarker.getPosition();
         if (imgOverlay != null) {
             imgOverlay.style.transform = 'rotate(0deg)';
         }
-
-    } else if (e.data.action === 'toggleHandles') {
-        if (usingCircle) {
-            circle.setEditable(!circle.getEditable());
-        } else {
-            if (swMarker.getMap() == null) {
-                swMarker.setMap(map);
-                neMarker.setMap(map);
-                nwMarker.setMap(map);
-                seMarker.setMap(map);
-                leftMarker.setMap(map);
-                topMarker.setMap(map);
-                rightMarker.setMap(map);
-                bottomMarker.setMap(map);
-                centerMarker.setMap(map);
-            } else {
-                swMarker.setMap(null);
-                neMarker.setMap(null);
-                nwMarker.setMap(null);
-                seMarker.setMap(null);
-                leftMarker.setMap(null);
-                topMarker.setMap(null);
-                rightMarker.setMap(null);
-                bottomMarker.setMap(null);
-                centerMarker.setMap(null);
-            }
-        }
+    } else if (e.data.action === 'circleToggleHandles') {
+		circle.setEditable(!circle.getEditable());
+    } else if (e.data.action === 'imageToggleHandles') {
+		if (swMarker.getMap() == null) {
+			swMarker.setMap(map);
+			neMarker.setMap(map);
+			nwMarker.setMap(map);
+			seMarker.setMap(map);
+			leftMarker.setMap(map);
+			topMarker.setMap(map);
+			rightMarker.setMap(map);
+			bottomMarker.setMap(map);
+			centerMarker.setMap(map);
+		} else {
+			swMarker.setMap(null);
+			neMarker.setMap(null);
+			nwMarker.setMap(null);
+			seMarker.setMap(null);
+			leftMarker.setMap(null);
+			topMarker.setMap(null);
+			rightMarker.setMap(null);
+			bottomMarker.setMap(null);
+			centerMarker.setMap(null);
+		}
     } else if (e.data.action === 'setImage') {
         imgSrc = e.data.imageUrl;
 		if (overlay == null) {
@@ -565,15 +556,13 @@ window.addEventListener("message", function (e) {
     } else if (e.data.action === 'setKml') {
         kmlSrc = e.data.newUrl;
         kmlOverlay.setUrl(e.data.newUrl);
-    } else if (e.data.action === 'changeOpacity') {
-        if (usingCircle) {
-            circle.setOptions({
-                strokeOpacity: e.data.newValue
-            });
-        } else {
-            overlayOpacity = e.data.newValue;
-            imgOverlay.style.opacity = overlayOpacity;
-        }
+    } else if (e.data.action === 'changeCircleOpacity') {
+		circle.setOptions({
+			strokeOpacity: e.data.newValue
+		});
+    } else if (e.data.action === 'changeImageOpacity') {
+		overlayOpacity = e.data.newValue;
+		imgOverlay.style.opacity = overlayOpacity;
     } else if (e.data.action === 'changeRotation') {
         imgOverlay.style.transform = 'rotate(' + e.data.newValue / 8 + 'deg)';
     } else if (e.data.action === 'getSaveInfo') {

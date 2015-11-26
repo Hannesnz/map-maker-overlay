@@ -21,9 +21,9 @@ document.onreadystatechange = function (e) {
                             var showingImage = response.showingImage;
                             var showingKml = response.showingKml;
                             var currentRotation = response.currentRotation;
-                            var showing = showingCircle || showingImage || showingKml;
                             var ready = response.ready;
-                            var handlesShowing = response.handlesShowing;
+                            var circleHandlesShowing = response.circleHandlesShowing;
+                            var imageHandlesShowing = response.imageHandlesShowing;
                             var imageUrl = response.imageUrl;
                             var kmlUrl = response.kmlUrl;
                             var showingSaves = false;
@@ -51,22 +51,16 @@ document.onreadystatechange = function (e) {
                                         $('#circle-options').show();
                                         $('#image-options').hide();
                                         $('#kml-options').hide();
-                                        $('#non-kml-options').show();
-                                        $('#showSaves').hide();
                                         break;
                                     case 'Image':
                                         $('#circle-options').hide();
                                         $('#image-options').show();
                                         $('#kml-options').hide();
-                                        $('#non-kml-options').show();
-                                        $('#showSaves').show();
                                         break;
                                     case 'KML':
                                         $('#circle-options').hide();
                                         $('#image-options').hide();
                                         $('#kml-options').show();
-                                        $('#non-kml-options').hide();
-                                        $('#showSaves').hide();
                                         break;
                                 }
                             }
@@ -99,15 +93,28 @@ document.onreadystatechange = function (e) {
                             showCorrectControls(overlayType);
                             $("#imageUrl").val(imageUrl);
                             $("#kmlUrl").val(kmlUrl);
-                            $("#opacity").slider({
+                            $("#circleOpacity").slider({
                                 max: 100,
                                 min: 10,
-                                value: (bg.overlayData.opacity * 100),
-                                disabled: !showing,
+                                value: (bg.overlayData.circleOpacity * 100),
+                                disabled: !showingCircle,
                                 slide: function (event, ui) {
-                                    bg.overlayData.opacity = ui.value / 100;
+                                    bg.overlayData.circleOpacity = ui.value / 100;
                                     chrome.tabs.sendMessage(tabs[0].id, {
-                                        action: 'changeOpacity',
+                                        action: 'changeCircleOpacity',
+                                        newValue: ui.value / 100
+                                    }, function (response) {});
+                                }
+                            });
+                            $("#imageOpacity").slider({
+                                max: 100,
+                                min: 10,
+                                value: (bg.overlayData.imageOpacity * 100),
+                                disabled: !showingCircle,
+                                slide: function (event, ui) {
+                                    bg.overlayData.imageOpacity = ui.value / 100;
+                                    chrome.tabs.sendMessage(tabs[0].id, {
+                                        action: 'changeImageOpacity',
                                         newValue: ui.value / 100
                                     }, function (response) {});
                                 }
@@ -116,7 +123,7 @@ document.onreadystatechange = function (e) {
                                 max: 15,
                                 min: 1,
                                 value: bg.overlayData.circleWidth,
-                                disabled: !showing,
+                                disabled: !showingCircle,
                                 slide: function (event, ui) {
                                     bg.overlayData.circleWidth = ui.value;
                                     chrome.tabs.sendMessage(tabs[0].id, {
@@ -125,7 +132,7 @@ document.onreadystatechange = function (e) {
                                     }, function (response) {});
                                 }
                             });
-                            document.getElementById('circle-color').disabled = !showing;
+                            document.getElementById('circle-color').disabled = !showingCircle;
                             $("#circle-color").button().val(bg.overlayData.circleColor).on('input', function () {
                                 bg.overlayData.circleColor = $(this).val();
                                 chrome.tabs.sendMessage(tabs[0].id, {
@@ -134,27 +141,49 @@ document.onreadystatechange = function (e) {
                                 }, function (response) {});
                             });
 
-                            $("#reset").button({
-                                disabled: !showing
+                            $("#resetCircle").button({
+                                disabled: !showingCircle
                             })
                                 .click(function (event) {
                                 event.preventDefault();
 
                                 chrome.tabs.sendMessage(tabs[0].id, {
-                                    action: 'resetPosition'
+                                    action: 'resetCirclePosition'
                                 }, function (response) {});
-                                $("#rotation").slider("value", 0);
                             });
-                            $("#toggleHandles").button({
-                                disabled: !showing,
-                                label: (handlesShowing) ? "Hide Handles" : "Show Handles"
+                            $("#resetImage").button({
+                                disabled: !showingImage
                             })
                                 .click(function (event) {
                                 event.preventDefault();
-                                handlesShowing = !handlesShowing;
-                                $("#toggleHandles").button("option", "label", (handlesShowing) ? "Hide Handles" : "Show Handles");
+
                                 chrome.tabs.sendMessage(tabs[0].id, {
-                                    action: 'toggleHandles'
+                                    action: 'resetImagePosition'
+                                }, function (response) {});
+                                $("#rotation").slider("value", 0);
+                            });
+                            $("#circleToggleHandles").button({
+                                disabled: !showingCircle,
+                                label: (circleHandlesShowing) ? "Hide Handles" : "Show Handles"
+                            })
+                                .click(function (event) {
+                                event.preventDefault();
+                                circleHandlesShowing = !circleHandlesShowing;
+                                $("#circleToggleHandles").button("option", "label", (circleHandlesShowing) ? "Hide Handles" : "Show Handles");
+                                chrome.tabs.sendMessage(tabs[0].id, {
+                                    action: 'circleToggleHandles'
+                                }, function (response) {});
+                            });
+                            $("#imageToggleHandles").button({
+                                disabled: !showingImage,
+                                label: (imageHandlesShowing) ? "Hide Handles" : "Show Handles"
+                            })
+                                .click(function (event) {
+                                event.preventDefault();
+                                imageHandlesShowing = !imageHandlesShowing;
+                                $("#imageToggleHandles").button("option", "label", (imageHandlesShowing) ? "Hide Handles" : "Show Handles");
+                                chrome.tabs.sendMessage(tabs[0].id, {
+                                    action: 'imageToggleHandles'
                                 }, function (response) {});
                             });
                             $("#rotation").slider({
@@ -190,7 +219,7 @@ document.onreadystatechange = function (e) {
 							function parseGoogleDriveLink() {
 								if ($("#imageUrl").val().search("drive.google")) {
 									var result = googleDriveId.exec($("#imageUrl").val());
-									if (result[0] != '') {
+									if (result != undefined) {
 										if (result[2] != undefined) {
 											$("#imageUrl").val("https://drive.google.com/uc?export=download&id=" + result[2]);
 										} else {
@@ -202,7 +231,7 @@ document.onreadystatechange = function (e) {
 							function parseKmlGoogleDriveLink() {
 								if ($("#kmlUrl").val().search("drive.google")) {
 									var result = googleDriveId.exec($("#kmlUrl").val());
-									if (result[0] != '') {
+									if (result != undefined) {
 										if (result[2] != undefined) {
 											$("#kmlUrl").val("https://drive.google.com/uc?export=download&id=" + result[2]);
 										} else {
@@ -241,7 +270,8 @@ document.onreadystatechange = function (e) {
                                 savedImage = bg.overlayData.getSavedImage($('#images-saved').find(":selected").val());
                                 $("#imageUrl").val(savedImage.imageUrl);
 								$("#rotation").slider("option", "value", savedImage.rotation);
-								$("#opacity").slider("option", "value", savedImage.opacity * 100);
+								$("#imageOpacity").slider("option", "value", savedImage.opacity * 100);
+								bg.overlayData.imageOpacity = savedImage.opacity;
 								setImageShowing(true);
 								var values = {};
 								for(var k in savedImage) values[k]=savedImage[k];
@@ -364,41 +394,28 @@ document.onreadystatechange = function (e) {
                                 .click(function (event) {
                                 event.preventDefault();
                                 showingCircle = !showingCircle;
-                                showingImage = false;
-                                showingKml = false;
-                                $("#toggleImage").button("option", "label", "Show Overlay");
-                                $("#toggleKml").button("option", "label", "Show Overlay");
-                                $("#rotation").slider("value", 0);
-                                showing = showingCircle || showingImage || showingKml;
-
                                 $("#toggleCircle").button("option", "label", (showingCircle) ? "Hide Overlay" : "Show Overlay");
-                                $("#reset").button("option", "disabled", !showingCircle);
-                                $("#opacity").slider("option", "disabled", !showingCircle);
+                                $("#resetCircle").button("option", "disabled", !showingCircle);
+                                $("#circleOpacity").slider("option", "disabled", !showingCircle);
                                 $("#circle-width").slider("option", "disabled", !showingCircle);
                                 $("#circle-color").button("option", "disabled", !showingCircle);
-                                $("#toggleHandles").button("option", "disabled", !showingCircle);
+                                $("#circleToggleHandles").button("option", "disabled", !showingCircle);
 
                                 chrome.tabs.sendMessage(tabs[0].id, {
                                     action: 'toggleCircleVisibility',
-                                    opacity: bg.overlayData.opacity,
+                                    opacity: bg.overlayData.circleOpacity,
                                     circleWidth: bg.overlayData.circleWidth,
                                     circleColor: bg.overlayData.circleColor
                                 }, function (response) {});
                             });
 							function setImageShowing(isShowing) {
 								showingImage = isShowing;
-                                showingCircle = false;
-                                showingKml = false;
-                                $("#toggleCircle").button("option", "label", "Show Overlay");
-                                $("#toggleKml").button("option", "label", "Show Overlay");
-                                showing = showingCircle || showingImage || showingKml;
-
                                 $("#toggleImage").button("option", "label", (showingImage) ? "Hide Overlay" : "Show Overlay");
-                                $("#reset").button("option", "disabled", !showingImage);
-                                $("#opacity").slider("option", "disabled", !showingImage);
+                                $("#resetImage").button("option", "disabled", !showingImage);
+                                $("#imageOpacity").slider("option", "disabled", !showingImage);
                                 $("#rotation").slider("option", "disabled", !showingImage);
                                 $("#setImage").button("option", "disabled", !showingImage);
-                                $("#toggleHandles").button("option", "disabled", !showingImage);
+                                $("#imageToggleHandles").button("option", "disabled", !showingImage);
                                 $('#save-image').button("option", "disabled", !showingImage);
 							}
                             $("#toggleImage").button({
@@ -412,7 +429,7 @@ document.onreadystatechange = function (e) {
 
                                 chrome.tabs.sendMessage(tabs[0].id, {
                                     action: 'toggleImageVisibility',
-                                    opacity: bg.overlayData.opacity,
+                                    opacity: bg.overlayData.imageOpacity,
                                     imageUrl: $("#imageUrl").val()
                                 }, function (response) {});
                             });
@@ -422,12 +439,6 @@ document.onreadystatechange = function (e) {
                                 .click(function (event) {
                                 event.preventDefault();
                                 showingKml = !showingKml;
-                                showingCircle = false;
-                                showingImage = false;
-                                $("#toggleCircle").button("option", "label", "Show Overlay");
-                                $("#toggleImage").button("option", "label", "Show Overlay");
-                                showing = showingCircle || showingImage || showingKml;
-
                                 $("#toggleKml").button("option", "label", (showingKml) ? "Hide Overlay" : "Show Overlay");
                                 $("#setKml").button("option", "disabled", !showingKml);
 

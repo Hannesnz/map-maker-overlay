@@ -27,6 +27,10 @@
 				<div id='circle-width' style='width:90%'></div>
 				<div style='margin-top: 10px; margin-bottom: 5px; display:block'>Circle Color:</div>
 				<div style='display:block'><input type="color" id='circle-color'> </div>
+				<button id='resetCircle' style='margin-top: 10px; display:block'>Reset Position</button>
+				<div style='margin-top: 10px; margin-bottom: 5px; display:block'>Opacity:</div>
+				<div id='circleOpacity' style='width:90%'></div>
+				<button style='margin-top: 10px; margin-bottom:10px; margin-right:5px; width:115px' id='circleToggleHandles'></button>
 			</div>
 			<div id='image-options' style='display:none'>
 				<label for="imageUrl" style='margin-top: 10px; margin-bottom: 5px; display:block'>Image URL:</label>
@@ -35,6 +39,11 @@
 				<button id='setImage' style='margin-top: 10px'>Update Image</button>
 				<div style='margin-top: 10px; margin-bottom: 5px; display:block'>Rotation:</div>
 				<div id='rotation' style='width:90%'></div>
+				<button id='resetImage' style='margin-top: 10px; display:block'>Reset Position</button>
+				<div style='margin-top: 10px; margin-bottom: 5px; display:block'>Opacity:</div>
+				<div id='imageOpacity' style='width:90%'></div>
+				<button style='margin-top: 10px; margin-bottom:10px; margin-right:5px; width:115px' id='imageToggleHandles'></button>
+				<button style='margin-top: 10px; margin-bottom:10px' id='showSaves'>Saved Images</button>
 			</div>
 			<div id='kml-options' style='display:none'>
 				<label for="kmlUrl" style='margin-top: 10px; margin-bottom: 5px; display:block'>KML URL:</label>
@@ -42,13 +51,6 @@
 				<button id='toggleKml' style='margin-top: 10px; margin-bottom: 10px'></button>
 				<button id='setKml' style='margin-top: 10px; margin-bottom: 10px'>Update KML</button>
 				<label for='kmlError' style='margin-bottom: 10px; display:none'></label>
-			</div>
-			<div id='non-kml-options'>
-				<button id='reset' style='margin-top: 10px; display:block'>Reset Position</button>
-				<div style='margin-top: 10px; margin-bottom: 5px; display:block'>Opacity:</div>
-				<div id='opacity' style='width:90%'></div>
-				<button style='margin-top: 10px; margin-bottom:10px; margin-right:5px; width:115px' id='toggleHandles'></button>
-				<button style='margin-top: 10px; margin-bottom:10px; display:none' id='showSaves'>Saved Images</button>
 			</div>
 			<form style="margin-bottom:5px;" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
 				<input type="hidden" name="cmd" value="_s-xclick">

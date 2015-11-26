@@ -1,7 +1,8 @@
 function OverlayData() {
 	this.circleWidth = 7;
 	this.circleColor = '#ff0000';
-	this.opacity = 0.5;
+	this.circleOpacity = 0.5;
+	this.imageOpacity = 1;
 	this.savedImages = [];
 }
 
@@ -69,18 +70,8 @@ OverlayData.prototype.hasSavedImageName = function(savedImageName) {
 
 var overlayData = null;
 
-chrome.runtime.onInstalled.addListener(function() {
-  chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
-    chrome.declarativeContent.onPageChanged.addRules([
-      {
-        conditions: [
-          new chrome.declarativeContent.PageStateMatcher({
-            pageUrl: { urlContains: '/mapmaker' }
-          })
-        ],
-        actions: [ new chrome.declarativeContent.ShowPageAction() ]
-      }
-    ]);
-  });
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (request.action === 'showPageAction') {
+		chrome.pageAction.show(sender.tab.id);
+	}
 });
-
