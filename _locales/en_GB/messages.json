@@ -1,0 +1,6 @@
+{
+  "circleColor": {
+    "message": "Circle Colour:",
+    "description":"Label for circle color control"
+  }
+}

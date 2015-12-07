@@ -1,9 +1,10 @@
 {
   "manifest_version": 2,
 
-  "name": "Map Maker Overlay",
-  "description": "Overlay a circle, image, KML or Terrain on Google Map Maker",
-  "version": "2.9",
+  "name": "__MSG_appName__",  
+  "description": "__MSG_appDesc__",   
+  "default_locale": "en",
+  "version": "3.0",
   "background": {
     "scripts": ["background.js"],
     "persistent": true
@@ -25,7 +26,8 @@
     "default_popup": "popup.html"
   },
   "permissions": [
-    "storage"
+    "storage",
+    "contextMenus"
   ],
   "web_accessible_resources": [
     "injected.js"

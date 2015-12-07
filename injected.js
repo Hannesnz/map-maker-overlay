@@ -316,14 +316,14 @@ function TerrainControl(controlDiv, map) {
     controlUI.style.marginTop = '22px';
 	controlUI.style.marginLeft = '22px';
     controlUI.style.textAlign = 'center';
-    controlUI.title = 'Show street map with terrain';
+    controlUI.title = terrainHint;
     controlDiv.appendChild(controlUI);
 
     var terrainCheck = document.createElement('input');
     terrainCheck.type = "checkbox";
     terrainCheck.id = "terrainCheck";
     var terrainLabel = document.createElement('label');
-    terrainLabel.innerHTML = "Terrain";
+    terrainLabel.innerHTML = terrainLabelText;
     terrainLabel.style.fontFamily = 'Roboto,Arial,sans-serif';
     terrainLabel.style.fontSize = '12px';
     terrainLabel.style.paddingRight = '5px';

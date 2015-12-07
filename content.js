@@ -79,7 +79,6 @@ chrome.runtime.onMessage.addListener(
 						  'circleHandlesShowing' : circleHandlesShowing,
 						  'imageHandlesShowing' : imageHandlesShowing,
 						  'currentRotation' : currentRotation,
-						  'ready' : ready,
 						  'imageUrl': imageUrl,
 						  'kmlUrl': kmlUrl});
 		} else if (request.action === 'toggleCircleVisibility') {
@@ -111,7 +110,6 @@ window.addEventListener("message", function (e) {
 	if (e.data.action === 'displayKmlStatusMessage') {
 		chrome.runtime.sendMessage({action:'displayKmlStatusMessage', status: e.data.status});
 	} else if (e.data.action === 'mapFound') {
-		ready = true;
 		chrome.runtime.sendMessage({action:'showPageAction'});
 	} else if (e.data.action === 'sendSaveInfo') {
 		chrome.runtime.sendMessage({action:'sendSaveInfo',
@@ -127,6 +125,11 @@ window.addEventListener("message", function (e) {
 });
 
 function injectJs(link) {
+	var langscr = document.createElement('script');
+	langscr.type="text/javascript";
+	langscr.text='var terrainLabelText = "' + chrome.i18n.getMessage("terrainLabel") + '";var terrainHint = "' + chrome.i18n.getMessage("terrainHint") + '";';
+	document.getElementsByTagName('head')[0].appendChild(langscr)
+
 	var scr = document.createElement('script');
 	scr.type="text/javascript";
 	scr.src=link;

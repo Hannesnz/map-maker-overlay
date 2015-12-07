@@ -1,0 +1,178 @@
+{
+  "appName": {
+    "message": "Слои Map Maker",
+    "description": "The title of the application, displayed in the web store."
+  },
+  "appDesc": {
+    "message": "Наложение окружности, изображения, KML-файла или рельефа в Google Map Maker",
+    "description":"The description of the application, displayed in the web store."
+  },
+  "loading": {
+    "message": "Загрузка...",
+    "description":"Message that shows while getting information from the content script"
+  },
+  "selectOverlayType": {
+    "message": "Выбор типа слоя:",
+    "description":"Label for selecting overlay type"
+  },
+  "circleLabel": {
+    "message": "Круг",
+    "description":"Label for circle overlay"
+  },
+  "imageLabel": {
+    "message": "Фото",
+    "description":"Label for image overlay"
+  },
+  "kmlLabel": {
+    "message": "KML",
+    "description":"Label for KML overlay"
+  },
+  "showOverlay": {
+    "message": "Показать слой",
+    "description":"Label for button to show the overlay"
+  },
+  "hideOverlay": {
+    "message": "Скрыть слой",
+    "description":"Label for button to hide the overlay"
+  },
+  "showHandles": {
+    "message": "Показать опорные точки",
+    "description":"Label for button to show the handles for circle and image overlays"
+  },
+  "hideHandles": {
+    "message": "Скрыть опорные точки",
+    "description":"Label for button to hide the handles for circle and image overlays"
+  },
+  "resetPosition": {
+    "message": "Сброс размера",
+    "description":"Label for button to reset the position for circle and image overlays"
+  },
+  "updateImage": {
+    "message": "Обновить фото",
+    "description":"Label for button to update the image with new URL"
+  },
+  "updateKml": {
+    "message": "Обновить KML",
+    "description":"Label for button to update the KML with new URL"
+  },
+  "circleWidth": {
+    "message": "Толщина линии:",
+    "description":"Label for circle width control"
+  },
+  "circleColor": {
+    "message": "Цвет линии:",
+    "description":"Label for circle color control"
+  },
+  "opacity": {
+    "message": "Прозрачность:",
+    "description":"Label for opacity control for circle and image overlays"
+  },
+  "rotation": {
+    "message": "Вращение:",
+    "description":"Label for rotation control for image overlay"
+  },
+  "imageUrl": {
+    "message": "URL-адрес изображения:",
+    "description":"Label for image URL text input"
+  },
+  "kmlUrl": {
+    "message": "URL-адрес KML:",
+    "description":"Label for KML URL text input"
+  },
+  "savedImageButton": {
+    "message": "Сохранённые",
+    "description":"Label for button to show or hide the saved images controls"
+  },
+  "savedImageLabel": {
+    "message": "Сохранённые изображения:",
+    "description":"Label for the saved images controls"
+  },
+  "loadselected": {
+    "message": "Загрузить выбранные",
+    "description":"Label for Load Selected Image button"
+  },
+  "deleteselected": {
+    "message": "Удалить выбранные",
+    "description":"Label for Delete Selected Image button"
+  },
+  "saveCurrentImage": {
+    "message": "Сохранить текущее как...",
+    "description":"Label for Save Current Image button"
+  },
+  "saveCurrentImageDialog": {
+    "message": "Сохранить текущее изображение и позицию как:",
+    "description":"Label for Save Current Image dialog message"
+  },
+  "saveCurrentImageDialogTitle": {
+    "message": "Сохранить изображение",
+    "description":"Title for Save Current Image dialog"
+  },
+  "confirmDialogTitle": {
+    "message": "Подтверждение",
+    "description":"Title for confirmation dialogs"
+  },
+  "deleteSelectedImageDialog": {
+    "message": "Уверены, что хотите удалить?",
+    "description":"Label for delete selected dialog message"
+  },
+  "overwriteImageDialog": {
+    "message": "Файл с таким названием уже существует. Перезаписать?",
+    "description":"Label for overwrite confirm dialog message"
+  },  
+  "yesButton": {
+    "message": "Да",
+    "description":"Label for Yes button on popup dialogs"
+  },
+  "noButton": {
+    "message": "Нет",
+    "description":"Label for No button on popup dialogs"
+  },
+  "saveButton": {
+    "message": "Сохранить",
+    "description":"Label for Save button on popup dialogs"
+  },
+  "cancelButton": {
+    "message": "Отмена",
+    "description":"Label for Cancel button on popup dialogs"
+  },
+  "DOCUMENT_NOT_FOUND": {
+    "message": "Файл не найден. Скорее всего, указан недопустимый URL-адрес, или файл не является общедоступным.",
+    "description":"KML error message"
+  },
+  "DOCUMENT_TOO_LARGE": {
+    "message": "Файл превышает допустимый размер для слоя KML.",
+    "description":"KML error message"
+  },
+  "FETCH_ERROR": {
+    "message": "Документ не может быть извлечен.",
+    "description":"KML error message"
+  },
+  "INVALID_DOCUMENT": {
+    "message": "Файл не является документом формата KML, KMZ или GeoRSS.",
+    "description":"KML error message"
+  },
+  "INVALID_REQUEST": {
+    "message": "Недопустимый KML-слой.",
+    "description":"KML error message"
+  },
+  "LIMITS_EXCEEDED": {
+    "message": "Документ превышает пределы функции KML-слоя.",
+    "description":"KML error message"
+  },
+  "TIMED_OUT": {
+    "message": "Документ не может быть загружен в разумные сроки",
+    "description":"KML error message"
+  },
+  "UNKNOWN": {
+    "message": "Документ не удалось загрузить по неизвестной причине.",
+    "description":"KML error message"
+  },
+  "terrainLabel": {
+    "message": "Рельеф",
+    "description":"Terain check box label"
+  },
+  "terrainHint": {
+    "message": "Показать карту с рельефом",
+    "description":"Terain check box tooltip"
+  }
+}

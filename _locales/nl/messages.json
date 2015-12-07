@@ -1,0 +1,178 @@
+{
+  "appName": {
+    "message": "Map Maker Overlay",
+    "description": "The title of the application, displayed in the web store."
+  },
+  "appDesc": {
+    "message": "Overlay a circle, image, KML or Terrain on Google Map Maker",
+    "description":"The description of the application, displayed in the web store."
+  },
+  "loading": {
+    "message": "Het laden...",
+    "description":"Message that shows while getting information from the content script"
+  },
+  "selectOverlayType": {
+    "message": "Select type of overlay:",
+    "description":"Label for selecting overlay type"
+  },
+  "circleLabel": {
+    "message": "Cirkel",
+    "description":"Label for circle overlay"
+  },
+  "imageLabel": {
+    "message": "Afbeelding",
+    "description":"Label for image overlay"
+  },
+  "kmlLabel": {
+    "message": "KML",
+    "description":"Label for KML overlay"
+  },
+  "showOverlay": {
+    "message": "Bedekking Tonen",
+    "description":"Label for button to show the overlay"
+  },
+  "hideOverlay": {
+    "message": "Bedekking Verberge",
+    "description":"Label for button to hide the overlay"
+  },
+  "showHandles": {
+    "message": "Handvat Tonen",
+    "description":"Label for button to show the handles for circle and image overlays"
+  },
+  "hideHandles": {
+    "message": "Handvat Verberge",
+    "description":"Label for button to hide the handles for circle and image overlays"
+  },
+  "resetPosition": {
+    "message": "Herstel Positie",
+    "description":"Label for button to reset the position for circle and image overlays"
+  },
+  "updateImage": {
+    "message": "Afbeeldingen Wisselen",
+    "description":"Label for button to update the image with new URL"
+  },
+  "updateKml": {
+    "message": "KML Wisselen",
+    "description":"Label for button to update the KML with new URL"
+  },
+  "circleWidth": {
+    "message": "Cirkel Breedte:",
+    "description":"Label for circle width control"
+  },
+  "circleColor": {
+    "message": "Circle Kleur:",
+    "description":"Label for circle color control"
+  },
+  "opacity": {
+    "message": "Ondoorzichtigheid:",
+    "description":"Label for opacity control for circle and image overlays"
+  },
+  "rotation": {
+    "message": "Draairichting:",
+    "description":"Label for rotation control for image overlay"
+  },
+  "imageUrl": {
+    "message": "Afbeeldingen URL:",
+    "description":"Label for image URL text input"
+  },
+  "kmlUrl": {
+    "message": "KML URL:",
+    "description":"Label for KML URL text input"
+  },
+  "savedImageButton": {
+    "message": "Opgeslagen Afbeeldingen",
+    "description":"Label for button to show or hide the saved images controls"
+  },
+  "savedImageLabel": {
+    "message": "Opgeslagen Afbeeldingen:",
+    "description":"Label for the saved images controls"
+  },
+  "loadselected": {
+    "message": "Laden Geselecteerde",
+    "description":"Label for Load Selected Image button"
+  },
+  "deleteselected": {
+    "message": "Verwijder Geselecteerde",
+    "description":"Label for Delete Selected Image button"
+  },
+  "saveCurrentImage": {
+    "message": "Opslaan huidige beeld op als...",
+    "description":"Label for Save Current Image button"
+  },
+  "saveCurrentImageDialog": {
+    "message": "Opslaan van de huidige afbeelding en positie als:",
+    "description":"Label for Save Current Image dialog message"
+  },
+  "saveCurrentImageDialogTitle": {
+    "message": "Afbeelding opslaan als",
+    "description":"Title for Save Current Image dialog"
+  },
+  "confirmDialogTitle": {
+    "message": "Bevestigen",
+    "description":"Title for confirmation dialogs"
+  },
+  "deleteSelectedImageDialog": {
+    "message": "Bent u zeker dat u dit wilt verwijderen?",
+    "description":"Label for delete selected dialog message"
+  },
+  "overwriteImageDialog": {
+    "message": "Een opgeslagen afbeelding met deze naam bestaat al. Overschrijven?",
+    "description":"Label for overwrite confirm dialog message"
+  },  
+  "yesButton": {
+    "message": "Ja",
+    "description":"Label for Yes button on popup dialogs"
+  },
+  "noButton": {
+    "message": "Nee",
+    "description":"Label for No button on popup dialogs"
+  },
+  "saveButton": {
+    "message": "Opslaan",
+    "description":"Label for Save button on popup dialogs"
+  },
+  "cancelButton": {
+    "message": "Annuleren",
+    "description":"Label for Cancel button on popup dialogs"
+  },
+  "DOCUMENT_NOT_FOUND": {
+    "message": "Het document is niet gevonden. Waarschijnlijk is een ongeldige URL of het document is niet openbaar.",
+    "description":"KML error message"
+  },
+  "DOCUMENT_TOO_LARGE": {
+    "message": "Het document overschrijdt de bestandsgrootte grenzen van KmlLayer.",
+    "description":"KML error message"
+  },
+  "FETCH_ERROR": {
+    "message": "Het document kon niet worden opgehaald.",
+    "description":"KML error message"
+  },
+  "INVALID_DOCUMENT": {
+    "message": "Het document is geen geldig KML, KMZ of GeoRSS document.",
+    "description":"KML error message"
+  },
+  "INVALID_REQUEST": {
+    "message": "De KmlLayer is ongeldig.",
+    "description":"KML error message"
+  },
+  "LIMITS_EXCEEDED": {
+    "message": "Het document overschrijdt de grenzen van de functie KmlLayer.",
+    "description":"KML error message"
+  },
+  "TIMED_OUT": {
+    "message": "Het document kan niet binnen een redelijke tijd worden geladen.",
+    "description":"KML error message"
+  },
+  "UNKNOWN": {
+    "message": "Het document kan niet worden geladen om een onbekende reden.",
+    "description":"KML error message"
+  },
+  "terrainLabel": {
+    "message": "Terrein",
+    "description":"Terrain check box label"
+  },
+  "terrainHint": {
+    "message": "Stratenkaart met terrein weergeven",
+    "description":"Terrain check box tooltip"
+  }
+}

@@ -1,0 +1,178 @@
+{
+  "appName": {
+    "message": "Map Maker Overlay",
+    "description": "The title of the application, displayed in the web store."
+  },
+  "appDesc": {
+    "message": "Overlay a circle, image, KML or Terrain on Google Map Maker",
+    "description":"The description of the application, displayed in the web store."
+  },
+  "loading": {
+    "message": "Loading...",
+    "description":"Message that shows while getting information from the content script"
+  },
+  "selectOverlayType": {
+    "message": "Select type of overlay:",
+    "description":"Label for selecting overlay type"
+  },
+  "circleLabel": {
+    "message": "Circle",
+    "description":"Label for circle overlay"
+  },
+  "imageLabel": {
+    "message": "Image",
+    "description":"Label for image overlay"
+  },
+  "kmlLabel": {
+    "message": "KML",
+    "description":"Label for KML overlay"
+  },
+  "showOverlay": {
+    "message": "Show Overlay",
+    "description":"Label for button to show the overlay"
+  },
+  "hideOverlay": {
+    "message": "Hide Overlay",
+    "description":"Label for button to hide the overlay"
+  },
+  "showHandles": {
+    "message": "Show Handles",
+    "description":"Label for button to show the handles for circle and image overlays"
+  },
+  "hideHandles": {
+    "message": "Hide Handles",
+    "description":"Label for button to hide the handles for circle and image overlays"
+  },
+  "resetPosition": {
+    "message": "Reset Position",
+    "description":"Label for button to reset the position for circle and image overlays"
+  },
+  "updateImage": {
+    "message": "Update Image",
+    "description":"Label for button to update the image with new URL"
+  },
+  "updateKml": {
+    "message": "Update KML",
+    "description":"Label for button to update the KML with new URL"
+  },
+  "circleWidth": {
+    "message": "Circle Width:",
+    "description":"Label for circle width control"
+  },
+  "circleColor": {
+    "message": "Circle Color:",
+    "description":"Label for circle color control"
+  },
+  "opacity": {
+    "message": "Opacity:",
+    "description":"Label for opacity control for circle and image overlays"
+  },
+  "rotation": {
+    "message": "Rotation:",
+    "description":"Label for rotation control for image overlay"
+  },
+  "imageUrl": {
+    "message": "Image URL:",
+    "description":"Label for image URL text input"
+  },
+  "kmlUrl": {
+    "message": "KML URL:",
+    "description":"Label for KML URL text input"
+  },
+  "savedImageButton": {
+    "message": "Saved Images",
+    "description":"Label for button to show or hide the saved images controls"
+  },
+  "savedImageLabel": {
+    "message": "Saved Images:",
+    "description":"Label for the saved images controls"
+  },
+  "loadselected": {
+    "message": "Load Selected",
+    "description":"Label for Load Selected Image button"
+  },
+  "deleteselected": {
+    "message": "Delete Selected",
+    "description":"Label for Delete Selected Image button"
+  },
+  "saveCurrentImage": {
+    "message": "Save current image as...",
+    "description":"Label for Save Current Image button"
+  },
+  "saveCurrentImageDialog": {
+    "message": "Save the current image and position as:",
+    "description":"Label for Save Current Image dialog message"
+  },
+  "saveCurrentImageDialogTitle": {
+    "message": "Save Image As",
+    "description":"Title for Save Current Image dialog"
+  },
+  "confirmDialogTitle": {
+    "message": "Confirm",
+    "description":"Title for confirmation dialogs"
+  },
+  "deleteSelectedImageDialog": {
+    "message": "Are you sure you want to delete this?",
+    "description":"Label for delete selected dialog message"
+  },
+  "overwriteImageDialog": {
+    "message": "A saved image with this name already exists.  Overwrite?",
+    "description":"Label for overwrite confirm dialog message"
+  },  
+  "yesButton": {
+    "message": "Yes",
+    "description":"Label for Yes button on popup dialogs"
+  },
+  "noButton": {
+    "message": "No",
+    "description":"Label for No button on popup dialogs"
+  },
+  "saveButton": {
+    "message": "Save",
+    "description":"Label for Save button on popup dialogs"
+  },
+  "cancelButton": {
+    "message": "Cancel",
+    "description":"Label for Cancel button on popup dialogs"
+  },
+  "DOCUMENT_NOT_FOUND": {
+    "message": "The document could not be found. Most likely it is an invalid URL, or the document is not publicly available.",
+    "description":"KML error message"
+  },
+  "DOCUMENT_TOO_LARGE": {
+    "message": "The document exceeds the file size limits of KmlLayer.",
+    "description":"KML error message"
+  },
+  "FETCH_ERROR": {
+    "message": "The document could not be fetched.",
+    "description":"KML error message"
+  },
+  "INVALID_DOCUMENT": {
+    "message": "The document is not a valid KML, KMZ or GeoRSS document.",
+    "description":"KML error message"
+  },
+  "INVALID_REQUEST": {
+    "message": "The KmlLayer is invalid.",
+    "description":"KML error message"
+  },
+  "LIMITS_EXCEEDED": {
+    "message": "The document exceeds the feature limits of KmlLayer.",
+    "description":"KML error message"
+  },
+  "TIMED_OUT": {
+    "message": "The document could not be loaded within a reasonable amount of time.",
+    "description":"KML error message"
+  },
+  "UNKNOWN": {
+    "message": "The document failed to load for an unknown reason.",
+    "description":"KML error message"
+  },
+  "terrainLabel": {
+    "message": "Terrain",
+    "description":"Terain check box label"
+  },
+  "terrainHint": {
+    "message": "Show street map with terrain",
+    "description":"Terain check box tooltip"
+  }
+}

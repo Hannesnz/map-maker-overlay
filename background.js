@@ -1,3 +1,5 @@
+var supportedLanguages = ['en', 'en-US', 'en-GB', 'nl', 'ru'];
+
 function OverlayData() {
 	this.circleWidth = 7;
 	this.circleColor = '#ff0000';
@@ -75,3 +77,14 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 		chrome.pageAction.show(sender.tab.id);
 	}
 });
+
+if (supportedLanguages.indexOf(chrome.i18n.getUILanguage()) < 0) {
+	chrome.contextMenus.removeAll();
+	chrome.contextMenus.create({
+		  title: "Help Translate...",
+		  contexts: ["page_action"],
+		  onclick: function() {
+			chrome.tabs.create({ url: "translate.html" });;
+		  }
+	});
+}

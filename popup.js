@@ -1,5 +1,45 @@
 var background = null;
 
+function setProperty(selector, prop, msg) {
+    document.querySelector(selector)[prop] = chrome.i18n.getMessage(msg);
+}
+
+function loadI18nMessages() {
+	setProperty('#loadingMessage', 'innerText', 'loading');
+	setProperty('#overlayTypeMessage', 'innerText', 'selectOverlayType');
+	setProperty('#circleLabel', 'innerText', 'circleLabel');
+	setProperty('#imageLabel', 'innerText', 'imageLabel');
+	setProperty('#kmlLabel', 'innerText', 'kmlLabel');
+	setProperty('#setImage', 'innerText', 'updateImage');
+	setProperty('#setKml', 'innerText', 'updateKml');
+	setProperty('#resetImage', 'innerText', 'resetPosition');
+	setProperty('#resetCircle', 'innerText', 'resetPosition');
+	setProperty('#circleWidthLabel', 'innerText', 'circleWidth');
+	setProperty('#circleColorLabel', 'innerText', 'circleColor');
+	setProperty('#circleOpacityLabel', 'innerText', 'opacity');
+	setProperty('#imageOpacityLabel', 'innerText', 'opacity');
+	setProperty('#rotationLabel', 'innerText', 'rotation');
+	setProperty('#imageUrlLabel', 'innerText', 'imageUrl');
+	setProperty('#kmlUrlLabel', 'innerText', 'kmlUrl');
+	setProperty('#btnYes', 'innerText', 'yesButton');
+	setProperty('#btnNo', 'innerText', 'noButton');
+	setProperty('#btnYesOverwrite', 'innerText', 'yesButton');
+	setProperty('#btnNoOverwrite', 'innerText', 'noButton');
+	setProperty('#showSaves', 'innerText', 'savedImageButton');
+	setProperty('#imagesSavedLabel', 'innerText', 'savedImageLabel');
+	setProperty('#btnLoad', 'innerText', 'loadselected');
+	setProperty('#btnDelete', 'innerText', 'deleteselected');
+	setProperty('#save-image', 'innerText', 'saveCurrentImage');
+	setProperty('#txtSaveAsLabel', 'innerText', 'saveCurrentImageDialog');
+	setProperty('#saveDialog', 'title', 'saveCurrentImageDialogTitle');
+	setProperty('#confirmDeleteDialog', 'title', 'confirmDialogTitle');
+	setProperty('#confirmOverwriteDialog', 'title', 'confirmDialogTitle');
+	setProperty('#deleteDialogMessage', 'innerText', 'deleteSelectedImageDialog');
+	setProperty('#overwriteDialogMessage', 'innerText', 'overwriteImageDialog');
+	setProperty('#btnSave', 'innerText', 'saveButton');
+	setProperty('#btnCancel', 'innerText', 'cancelButton');
+}
+
 document.onreadystatechange = function (e) {
     if (document.readyState === 'complete') {
         chrome.runtime.getBackgroundPage(function (bg) {
@@ -16,12 +56,12 @@ document.onreadystatechange = function (e) {
                         chrome.tabs.sendMessage(tabs[0].id, {
                             action: 'overlayShowing'
                         }, function (response) {
+                            loadI18nMessages();
                             var overlayType = response.overlayType;
                             var showingCircle = response.showingCircle;
                             var showingImage = response.showingImage;
                             var showingKml = response.showingKml;
                             var currentRotation = response.currentRotation;
-                            var ready = response.ready;
                             var circleHandlesShowing = response.circleHandlesShowing;
                             var imageHandlesShowing = response.imageHandlesShowing;
                             var imageUrl = response.imageUrl;
@@ -31,13 +71,8 @@ document.onreadystatechange = function (e) {
                             for (var i = 0; i < bg.overlayData.savedImages.length; i++) {
                                 $('#images-saved').append(new Option(bg.overlayData.savedImages[i].name));
                             }
-                            if (ready) {
-                                $("#not-ready").hide();
-                                $("#container").show();
-                            } else {
-                                $("#not-ready").show();
-                                $("#container").hide();
-                            }
+                            $("#loading").hide();
+                            $("#container").show();
                             $("#imageUrl").on("click", function () {
                                 $(this).select();
                             });
@@ -64,6 +99,9 @@ document.onreadystatechange = function (e) {
                                         break;
                                 }
                             }
+							if (bg.supportedLanguages.indexOf(chrome.i18n.getUILanguage()) < 0) {
+								$('#translateHelp').show();
+							}
 							$("#overlay-type").buttonset();
 							$("#" + overlayType).prop('checked', true).button('refresh');
 							$("#Circle").button().click(function (event) {
@@ -110,7 +148,7 @@ document.onreadystatechange = function (e) {
                                 max: 100,
                                 min: 10,
                                 value: (bg.overlayData.imageOpacity * 100),
-                                disabled: !showingCircle,
+                                disabled: !showingImage,
                                 slide: function (event, ui) {
                                     bg.overlayData.imageOpacity = ui.value / 100;
                                     chrome.tabs.sendMessage(tabs[0].id, {
@@ -164,24 +202,24 @@ document.onreadystatechange = function (e) {
                             });
                             $("#circleToggleHandles").button({
                                 disabled: !showingCircle,
-                                label: (circleHandlesShowing) ? "Hide Handles" : "Show Handles"
+                                label: (circleHandlesShowing) ? chrome.i18n.getMessage("hideHandles") : chrome.i18n.getMessage("showHandles")
                             })
                                 .click(function (event) {
                                 event.preventDefault();
                                 circleHandlesShowing = !circleHandlesShowing;
-                                $("#circleToggleHandles").button("option", "label", (circleHandlesShowing) ? "Hide Handles" : "Show Handles");
+                                $("#circleToggleHandles").button("option", "label", (circleHandlesShowing) ? chrome.i18n.getMessage("hideHandles") : chrome.i18n.getMessage("showHandles"));
                                 chrome.tabs.sendMessage(tabs[0].id, {
                                     action: 'circleToggleHandles'
                                 }, function (response) {});
                             });
                             $("#imageToggleHandles").button({
                                 disabled: !showingImage,
-                                label: (imageHandlesShowing) ? "Hide Handles" : "Show Handles"
+                                label: (imageHandlesShowing) ? chrome.i18n.getMessage("hideHandles") : chrome.i18n.getMessage("showHandles")
                             })
                                 .click(function (event) {
                                 event.preventDefault();
                                 imageHandlesShowing = !imageHandlesShowing;
-                                $("#imageToggleHandles").button("option", "label", (imageHandlesShowing) ? "Hide Handles" : "Show Handles");
+                                $("#imageToggleHandles").button("option", "label", (imageHandlesShowing) ? chrome.i18n.getMessage("hideHandles") : chrome.i18n.getMessage("showHandles"));
                                 chrome.tabs.sendMessage(tabs[0].id, {
                                     action: 'imageToggleHandles'
                                 }, function (response) {});
@@ -289,19 +327,19 @@ document.onreadystatechange = function (e) {
                                 autoOpen: false,
                                 resizable: false,
                                 modal: true,
-                                closeText: "Cancel"
+                                closeText: chrome.i18n.getMessage("cancelButton")
                             });
                             $("#confirmDeleteDialog").dialog({
                                 autoOpen: false,
                                 resizable: false,
                                 modal: true,
-                                closeText: "Cancel"
+                                closeText: chrome.i18n.getMessage("cancelButton")
                             });
                              $("#confirmOverwriteDialog").dialog({
                                 autoOpen: false,
                                 resizable: false,
                                 modal: true,
-                                closeText: "Cancel"
+                                closeText: chrome.i18n.getMessage("cancelButton")
                             });
                             $('#images-saved').on('change', function () {
                                 $("#btnLoad").button("option", "disabled", false);
@@ -389,12 +427,12 @@ document.onreadystatechange = function (e) {
                                 }
                             });
                             $("#toggleCircle").button({
-                                label: (showingCircle) ? "Hide Overlay" : "Show Overlay"
+                                label: (showingCircle) ? chrome.i18n.getMessage("hideOverlay") : chrome.i18n.getMessage("showOverlay")
                             })
                                 .click(function (event) {
                                 event.preventDefault();
                                 showingCircle = !showingCircle;
-                                $("#toggleCircle").button("option", "label", (showingCircle) ? "Hide Overlay" : "Show Overlay");
+                                $("#toggleCircle").button("option", "label", (showingCircle) ? chrome.i18n.getMessage("hideOverlay") : chrome.i18n.getMessage("showOverlay"));
                                 $("#resetCircle").button("option", "disabled", !showingCircle);
                                 $("#circleOpacity").slider("option", "disabled", !showingCircle);
                                 $("#circle-width").slider("option", "disabled", !showingCircle);
@@ -410,7 +448,7 @@ document.onreadystatechange = function (e) {
                             });
 							function setImageShowing(isShowing) {
 								showingImage = isShowing;
-                                $("#toggleImage").button("option", "label", (showingImage) ? "Hide Overlay" : "Show Overlay");
+                                $("#toggleImage").button("option", "label", (showingImage) ? chrome.i18n.getMessage("hideOverlay") : chrome.i18n.getMessage("showOverlay"));
                                 $("#resetImage").button("option", "disabled", !showingImage);
                                 $("#imageOpacity").slider("option", "disabled", !showingImage);
                                 $("#rotation").slider("option", "disabled", !showingImage);
@@ -419,7 +457,7 @@ document.onreadystatechange = function (e) {
                                 $('#save-image').button("option", "disabled", !showingImage);
 							}
                             $("#toggleImage").button({
-                                label: (showingImage) ? "Hide Overlay" : "Show Overlay"
+                                label: (showingImage) ? chrome.i18n.getMessage("hideOverlay") : chrome.i18n.getMessage("showOverlay")
                             })
                                 .click(function (event) {
                                 event.preventDefault();
@@ -434,12 +472,12 @@ document.onreadystatechange = function (e) {
                                 }, function (response) {});
                             });
                             $("#toggleKml").button({
-                                label: (showingKml) ? "Hide Overlay" : "Show Overlay"
+                                label: (showingKml) ? chrome.i18n.getMessage("hideOverlay") : chrome.i18n.getMessage("showOverlay")
                             })
                                 .click(function (event) {
                                 event.preventDefault();
                                 showingKml = !showingKml;
-                                $("#toggleKml").button("option", "label", (showingKml) ? "Hide Overlay" : "Show Overlay");
+                                $("#toggleKml").button("option", "label", (showingKml) ? chrome.i18n.getMessage("hideOverlay") : chrome.i18n.getMessage("showOverlay"));
                                 $("#setKml").button("option", "disabled", !showingKml);
 
 								parseKmlGoogleDriveLink();
@@ -468,34 +506,7 @@ function (request, sender, sendResponse) {
         if (request.status == 'OK') {
             $('label[for="kmlError"]').css('display', 'none');
         } else {
-            var engMessage;
-            switch (request.status) {
-                case 'DOCUMENT_NOT_FOUND':
-                    engMessage = 'The document could not be found. Most likely it is an invalid URL, or the document is not publicly available.';
-                    break;
-                case 'DOCUMENT_TOO_LARGE':
-                    engMessage = 'The document exceeds the file size limits of KmlLayer.';
-                    break;
-                case 'FETCH_ERROR':
-                    engMessage = 'The document could not be fetched.';
-                    break;
-                case 'INVALID_DOCUMENT':
-                    engMessage = 'The document is not a valid KML, KMZ or GeoRSS document.';
-                    break;
-                case 'INVALID_REQUEST':
-                    engMessage = 'The KmlLayer is invalid.';
-                    break;
-                case 'LIMITS_EXCEEDED':
-                    engMessage = 'The document exceeds the feature limits of KmlLayer.';
-                    break;
-                case 'TIMED_OUT':
-                    engMessage = 'The document could not be loaded within a reasonable amount of time.';
-                    break;
-                case 'UNKNOWN':
-                    engMessage = 'The document failed to load for an unknown reason.';
-                    break;
-            }
-            $('label[for="kmlError"]').text(engMessage);
+            $('label[for="kmlError"]').text(chrome.i18n.getMessage(request.status));
             $('label[for="kmlError"]').css('display', 'block');
         }
     } else if (request.action === 'sendSaveInfo') {
