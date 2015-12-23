@@ -407,6 +407,7 @@ window.addEventListener("message", function (e) {
                 strokeWeight: e.data.circleWidth,
                 fillOpacity: 0.0,
                 editable: true,
+				clickable: false,
                 radius: google.maps.geometry.spherical.computeDistanceBetween(map.getBounds().getNorthEast(), map.getBounds().getCenter()) / 3,
                 map: map,
                 center: map.getCenter()

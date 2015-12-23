@@ -99,9 +99,18 @@ document.onreadystatechange = function (e) {
                                         break;
                                 }
                             }
-							if (bg.supportedLanguages.indexOf(chrome.i18n.getUILanguage()) < 0) {
-								$('#translateHelp').show();
+							if (!bg.overlayData.hideTranslateMessage) {
+								if (bg.supportedLanguages.indexOf(chrome.i18n.getUILanguage()) < 0) {
+									$('#translateHelp').show();
+								}	
 							}
+							$("#closeTranslate").button({icons: {primary: "ui-icon-close"}, text: false})
+								.click(function (event) {
+								event.preventDefault();
+								$("#translateHelp").hide();
+								bg.overlayData.hideTranslateMessage = true;
+								bg.overlayData.saveData();
+							});
 							$("#overlay-type").buttonset();
 							$("#" + overlayType).prop('checked', true).button('refresh');
 							$("#Circle").button().click(function (event) {

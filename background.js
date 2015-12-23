@@ -1,4 +1,4 @@
-var supportedLanguages = ['en', 'en-US', 'en-GB', 'nl', 'ru'];
+var supportedLanguages = ['en', 'en-US', 'en-GB', 'nl', 'ru', 'it'];
 
 function OverlayData() {
 	this.circleWidth = 7;
@@ -6,6 +6,7 @@ function OverlayData() {
 	this.circleOpacity = 0.5;
 	this.imageOpacity = 1;
 	this.savedImages = [];
+	this.hideTranslateMessage = false;
 }
 
 OverlayData.prototype.loadData = function (sendResponse) {
@@ -24,6 +25,9 @@ OverlayData.prototype.loadData = function (sendResponse) {
 			if (items.savedImages != null) {
 				data.savedImages = items.savedImages;
 			}
+			if (items.hideTranslateMessage != null) {
+				data.hideTranslateMessage = items.hideTranslateMessage;
+			}
 		}
 		sendResponse();
 	});
@@ -34,6 +38,7 @@ OverlayData.prototype.saveData = function() {
 	chrome.storage.sync.set({circleWidth: data.circleWidth,
 							 circleColor: data.circleColor,
 							 opacity: data.opacity,
+							 hideTranslateMessage: data.hideTranslateMessage,
 							 savedImages: data.savedImages}, function() {});
 };
 
