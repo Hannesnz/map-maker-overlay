@@ -1,0 +1,178 @@
+{
+   "DOCUMENT_NOT_FOUND": {
+      "description": "KML error message",
+      "message": "Das Dokument konnte nicht gefunden werden. Wahrscheinlich die URL ungültig oder das Dokument ist nicht öffentlich verfügbar."
+   },
+   "DOCUMENT_TOO_LARGE": {
+      "description": "KML error message",
+      "message": "Das Dokument überschreitet die Dateigrößenbeschränkung von KmlLayer."
+   },
+   "FETCH_ERROR": {
+      "description": "KML error message",
+      "message": "Das Dokument konnte nicht geladen werden."
+   },
+   "INVALID_DOCUMENT": {
+      "description": "KML error message",
+      "message": "Das Dokument ist kein gültiges KML, KMZ oder GeoRSS Dukument."
+   },
+   "INVALID_REQUEST": {
+      "description": "KML error message",
+      "message": "Der KmlLayer ist ungültig."
+   },
+   "LIMITS_EXCEEDED": {
+      "description": "KML error message",
+      "message": "Das Dokument The document exceeds the feature limits of KmlLayer."
+   },
+   "TIMED_OUT": {
+      "description": "KML error message",
+      "message": "Das Dokument konnte nicht in absehbarer Zeit geladen werden."
+   },
+   "UNKNOWN": {
+      "description": "KML error message",
+      "message": "Das Dokument konnte wegen eines unbekannten Fehlers nicht geladen werden."
+   },
+   "appDesc": {
+      "description": "The description of the application, displayed in the web store.",
+      "message": "Fügt einen Overlayer vom Typ eines Kreises, Bildes, KML oder Gelände in Google Map Maker"
+   },
+   "appName": {
+      "description": "The title of the application, displayed in the web store.",
+      "message": "Map Maker Overlay"
+   },
+   "cancelButton": {
+      "description": "Label for Cancel button on popup dialogs",
+      "message": "Abbrechen"
+   },
+   "circleColor": {
+      "description": "Label for circle color control",
+      "message": "Kreisfarbe:"
+   },
+   "circleLabel": {
+      "description": "Label for circle overlay",
+      "message": "Kreis"
+   },
+   "circleWidth": {
+      "description": "Label for circle width control",
+      "message": "Linienstärke:"
+   },
+   "confirmDialogTitle": {
+      "description": "Title for confirmation dialogs",
+      "message": "Bestätigen"
+   },
+   "deleteSelectedImageDialog": {
+      "description": "Label for delete selected dialog message",
+      "message": "Bist du sicher, dass du das löschen möchtest?"
+   },
+   "deleteselected": {
+      "description": "Label for Delete Selected Image button",
+      "message": "Ausgewähltes Bild löschen"
+   },
+   "hideHandles": {
+      "description": "Label for button to hide the handles for circle and image overlays",
+      "message": "Verberge Angriffspunkte"
+   },
+   "hideOverlay": {
+      "description": "Label for button to hide the overlay",
+      "message": "Verberge Overlay"
+   },
+   "imageLabel": {
+      "description": "Label for image overlay",
+      "message": "Bild"
+   },
+   "imageUrl": {
+      "description": "Label for image URL text input",
+      "message": "URL des Bildes:"
+   },
+   "kmlLabel": {
+      "description": "Label for KML overlay",
+      "message": "KML"
+   },
+   "kmlUrl": {
+      "description": "Label for KML URL text input",
+      "message": "URL des KML-Dokumentes:"
+   },
+   "loading": {
+      "description": "Message that shows while getting information from the content script",
+      "message": "Lade..."
+   },
+   "loadselected": {
+      "description": "Label for Load Selected Image button",
+      "message": "Ausgewähltes Bild laden"
+   },
+   "noButton": {
+      "description": "Label for No button on popup dialogs",
+      "message": "Nein"
+   },
+   "opacity": {
+      "description": "Label for opacity control for circle and image overlays",
+      "message": "Deckkraft:"
+   },
+   "overwriteImageDialog": {
+      "description": "Label for overwrite confirm dialog message",
+      "message": "Ein gespeichertes Bild mit diesem Namen existiert bereits.  Überschreiben?"
+   },
+   "resetPosition": {
+      "description": "Label for button to reset the position for circle and image overlays",
+      "message": "Resette Position"
+   },
+   "rotation": {
+      "description": "Label for rotation control for image overlay",
+      "message": "Rotation:"
+   },
+   "saveButton": {
+      "description": "Label for Save button on popup dialogs",
+      "message": "Speichern"
+   },
+   "saveCurrentImage": {
+      "description": "Label for Save Current Image button",
+      "message": "Speichere aktuelles Bild als..."
+   },
+   "saveCurrentImageDialog": {
+      "description": "Label for Save Current Image dialog message",
+      "message": "Speichere aktuelles Bild und Position als:"
+   },
+   "saveCurrentImageDialogTitle": {
+      "description": "Title for Save Current Image dialog",
+      "message": "Speichere Bild als"
+   },
+   "savedImageButton": {
+      "description": "Label for button to show or hide the saved images controls",
+      "message": "Gespeicherte Bilder"
+   },
+   "savedImageLabel": {
+      "description": "Label for the saved images controls",
+      "message": "Gespeicherte Bilder:"
+   },
+   "selectOverlayType": {
+      "description": "Label for selecting overlay type",
+      "message": "Wähle Typ des Overlays aus:"
+   },
+   "showHandles": {
+      "description": "Label for button to show the handles for circle and image overlays",
+      "message": "Zeige Angriffspunkte"
+   },
+   "showOverlay": {
+      "description": "Label for button to show the overlay",
+      "message": "Zeige Overlay"
+   },
+   "terrainHint": {
+      "description": "Terain check box tooltip",
+      "message": "Zeige Straßenkarte mit Gelände"
+   },
+   "terrainLabel": {
+      "description": "Terain check box label",
+      "message": "Gelände"
+   },
+   "updateImage": {
+      "description": "Label for button to update the image with new URL",
+      "message": "Aktualisiere Bild"
+   },
+   "updateKml": {
+      "description": "Label for button to update the KML with new URL",
+      "message": "Aktualisiere KML"
+   },
+   "yesButton": {
+      "description": "Label for Yes button on popup dialogs",
+      "message": "Ja"
+   }
+}
