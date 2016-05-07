@@ -1,0 +1,178 @@
+{
+   "DOCUMENT_NOT_FOUND": {
+      "description": "KML error message",
+      "message": "Файл не може бути знайдений. Швидше за все, невірний URL, або файл не є загальнодоступним."
+   },
+   "DOCUMENT_TOO_LARGE": {
+      "description": "KML error message",
+      "message": "KML-файл занадто великий."
+   },
+   "FETCH_ERROR": {
+      "description": "KML error message",
+      "message": "Цей файл не можу використати."
+   },
+   "INVALID_DOCUMENT": {
+      "description": "KML error message",
+      "message": "Файл не є допустимим KML, KMZ або GeoRSS."
+   },
+   "INVALID_REQUEST": {
+      "description": "KML error message",
+      "message": "KML шар є недійсним."
+   },
+   "LIMITS_EXCEEDED": {
+      "description": "KML error message",
+      "message": "Файл виходить за межі можливостей KmlLayer."
+   },
+   "TIMED_OUT": {
+      "description": "KML error message",
+      "message": "Файл не може бути завантажений повністю в розумний час."
+   },
+   "UNKNOWN": {
+      "description": "KML error message",
+      "message": "Файл не вдалося завантажити з невідомої причини."
+   },
+   "appDesc": {
+      "description": "The description of the application, displayed in the web store.",
+      "message": "Накладання кола, зображення, KML або місцевості на Google Map Maker"
+   },
+   "appName": {
+      "description": "The title of the application, displayed in the web store.",
+      "message": "Map Maker Overlay"
+   },
+   "cancelButton": {
+      "description": "Label for Cancel button on popup dialogs",
+      "message": "Скасувати"
+   },
+   "circleColor": {
+      "description": "Label for circle color control",
+      "message": "Колір для кола:"
+   },
+   "circleLabel": {
+      "description": "Label for circle overlay",
+      "message": "Коло"
+   },
+   "circleWidth": {
+      "description": "Label for circle width control",
+      "message": "Ширина кола:"
+   },
+   "confirmDialogTitle": {
+      "description": "Title for confirmation dialogs",
+      "message": "Застосувати"
+   },
+   "deleteSelectedImageDialog": {
+      "description": "Label for delete selected dialog message",
+      "message": "Ви впевнені, що хочете видалити це?"
+   },
+   "deleteselected": {
+      "description": "Label for Delete Selected Image button",
+      "message": "Видалити вибране"
+   },
+   "hideHandles": {
+      "description": "Label for button to hide the handles for circle and image overlays",
+      "message": "Приховати кнопки"
+   },
+   "hideOverlay": {
+      "description": "Label for button to hide the overlay",
+      "message": "Прибрати перекриття"
+   },
+   "imageLabel": {
+      "description": "Label for image overlay",
+      "message": "Зображення"
+   },
+   "imageUrl": {
+      "description": "Label for image URL text input",
+      "message": "URL зображення:"
+   },
+   "kmlLabel": {
+      "description": "Label for KML overlay",
+      "message": "KML"
+   },
+   "kmlUrl": {
+      "description": "Label for KML URL text input",
+      "message": "KML URL:"
+   },
+   "loading": {
+      "description": "Message that shows while getting information from the content script",
+      "message": "Завантажую..."
+   },
+   "loadselected": {
+      "description": "Label for Load Selected Image button",
+      "message": "Завантажити вибране"
+   },
+   "noButton": {
+      "description": "Label for No button on popup dialogs",
+      "message": "Ні"
+   },
+   "opacity": {
+      "description": "Label for opacity control for circle and image overlays",
+      "message": "Прозорість:"
+   },
+   "overwriteImageDialog": {
+      "description": "Label for overwrite confirm dialog message",
+      "message": "Збережене зображення з таким ім'ям вже існує. Переписати?"
+   },
+   "resetPosition": {
+      "description": "Label for button to reset the position for circle and image overlays",
+      "message": "Скидання установки"
+   },
+   "rotation": {
+      "description": "Label for rotation control for image overlay",
+      "message": "Обертання:"
+   },
+   "saveButton": {
+      "description": "Label for Save button on popup dialogs",
+      "message": "Зберегти"
+   },
+   "saveCurrentImage": {
+      "description": "Label for Save Current Image button",
+      "message": "Зберегти поточне зображення як..."
+   },
+   "saveCurrentImageDialog": {
+      "description": "Label for Save Current Image dialog message",
+      "message": "Зберегти поточне зображення і позиції як:"
+   },
+   "saveCurrentImageDialogTitle": {
+      "description": "Title for Save Current Image dialog",
+      "message": "Зберегти зображення як"
+   },
+   "savedImageButton": {
+      "description": "Label for button to show or hide the saved images controls",
+      "message": "Збережені зображення"
+   },
+   "savedImageLabel": {
+      "description": "Label for the saved images controls",
+      "message": "Збережені зображення:"
+   },
+   "selectOverlayType": {
+      "description": "Label for selecting overlay type",
+      "message": "Виберіть тип накладення:"
+   },
+   "showHandles": {
+      "description": "Label for button to show the handles for circle and image overlays",
+      "message": "Показати кнопки керування"
+   },
+   "showOverlay": {
+      "description": "Label for button to show the overlay",
+      "message": "Показати перекриття"
+   },
+   "terrainHint": {
+      "description": "Terain check box tooltip",
+      "message": "Показати карту з рельєфом"
+   },
+   "terrainLabel": {
+      "description": "Terain check box label",
+      "message": "Рельєф"
+   },
+   "updateImage": {
+      "description": "Label for button to update the image with new URL",
+      "message": "Оновити зображення"
+   },
+   "updateKml": {
+      "description": "Label for button to update the KML with new URL",
+      "message": "Оновити KML"
+   },
+   "yesButton": {
+      "description": "Label for Yes button on popup dialogs",
+      "message": "Так"
+   }
+}

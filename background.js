@@ -1,4 +1,4 @@
-var supportedLanguages = ['en', 'en-US', 'en-GB', 'nl', 'ru', 'it', 'de'];
+var supportedLanguages = ['en', 'en-US', 'en-GB', 'nl', 'ru', 'it', 'de', 'uk'];
 
 function OverlayData() {
 	this.circleWidth = 7;
