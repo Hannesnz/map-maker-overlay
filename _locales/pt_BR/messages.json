@@ -1,0 +1,178 @@
+{
+   "DOCUMENT_NOT_FOUND": {
+      "description": "KML error message",
+      "message": "O documento não pôde ser encontrado. O mais provável é um URL inválido, ou o documento não está disponível publicamente."
+   },
+   "DOCUMENT_TOO_LARGE": {
+      "description": "KML error message",
+      "message": "O documento excede os limites de tamanho de arquivo de KmlLayer."
+   },
+   "FETCH_ERROR": {
+      "description": "KML error message",
+      "message": "O documento não pode ser buscado."
+   },
+   "INVALID_DOCUMENT": {
+      "description": "KML error message",
+      "message": "O documento não é um documento válido de KML, KMZ ou GeoRSS."
+   },
+   "INVALID_REQUEST": {
+      "description": "KML error message",
+      "message": "O KmlLayer é inválido."
+   },
+   "LIMITS_EXCEEDED": {
+      "description": "KML error message",
+      "message": "O documento excede os limites do recurso do KmlLayer."
+   },
+   "TIMED_OUT": {
+      "description": "KML error message",
+      "message": "O documento não pôde ser carregado dentro de um período razoável de tempo."
+   },
+   "UNKNOWN": {
+      "description": "KML error message",
+      "message": "O documento falhou ao carregar por um motivo desconhecido."
+   },
+   "appDesc": {
+      "description": "The description of the application, displayed in the web store.",
+      "message": "Sobreposição de um círculo, imagem, KML ou relevo no Google Map Maker"
+   },
+   "appName": {
+      "description": "The title of the application, displayed in the web store.",
+      "message": "Sobreposição no Map Maker"
+   },
+   "cancelButton": {
+      "description": "Label for Cancel button on popup dialogs",
+      "message": "Cancelar"
+   },
+   "circleColor": {
+      "description": "Label for circle color control",
+      "message": "Cor do círculo:"
+   },
+   "circleLabel": {
+      "description": "Label for circle overlay",
+      "message": "Círculo"
+   },
+   "circleWidth": {
+      "description": "Label for circle width control",
+      "message": "Largura do círculo:"
+   },
+   "confirmDialogTitle": {
+      "description": "Title for confirmation dialogs",
+      "message": "Confirmar"
+   },
+   "deleteSelectedImageDialog": {
+      "description": "Label for delete selected dialog message",
+      "message": "Tem certeza que deseja excluir isto?"
+   },
+   "deleteselected": {
+      "description": "Label for Delete Selected Image button",
+      "message": "Excluir selecionados"
+   },
+   "hideHandles": {
+      "description": "Label for button to hide the handles for circle and image overlays",
+      "message": "Ocultar pontos"
+   },
+   "hideOverlay": {
+      "description": "Label for button to hide the overlay",
+      "message": "Ocultar sobreposição"
+   },
+   "imageLabel": {
+      "description": "Label for image overlay",
+      "message": "Imagem"
+   },
+   "imageUrl": {
+      "description": "Label for image URL text input",
+      "message": "URL da Imagem:"
+   },
+   "kmlLabel": {
+      "description": "Label for KML overlay",
+      "message": "KML"
+   },
+   "kmlUrl": {
+      "description": "Label for KML URL text input",
+      "message": "URL do KML:"
+   },
+   "loading": {
+      "description": "Message that shows while getting information from the content script",
+      "message": "Carregando..."
+   },
+   "loadselected": {
+      "description": "Label for Load Selected Image button",
+      "message": "Carregar Selecionado"
+   },
+   "noButton": {
+      "description": "Label for No button on popup dialogs",
+      "message": "Não"
+   },
+   "opacity": {
+      "description": "Label for opacity control for circle and image overlays",
+      "message": "Opacidade:"
+   },
+   "overwriteImageDialog": {
+      "description": "Label for overwrite confirm dialog message",
+      "message": "Já existe uma imagem salva com esse nome. Sobrescrever?"
+   },
+   "resetPosition": {
+      "description": "Label for button to reset the position for circle and image overlays",
+      "message": "Redefinir a posição"
+   },
+   "rotation": {
+      "description": "Label for rotation control for image overlay",
+      "message": "Rotação:"
+   },
+   "saveButton": {
+      "description": "Label for Save button on popup dialogs",
+      "message": "Salvar"
+   },
+   "saveCurrentImage": {
+      "description": "Label for Save Current Image button",
+      "message": "Salvar imagem atual como..."
+   },
+   "saveCurrentImageDialog": {
+      "description": "Label for Save Current Image dialog message",
+      "message": "Salvar imagem e posição atual como:"
+   },
+   "saveCurrentImageDialogTitle": {
+      "description": "Title for Save Current Image dialog",
+      "message": "Salvar imagem como"
+   },
+   "savedImageButton": {
+      "description": "Label for button to show or hide the saved images controls",
+      "message": "Imagens salvas"
+   },
+   "savedImageLabel": {
+      "description": "Label for the saved images controls",
+      "message": "Imagens salvas:"
+   },
+   "selectOverlayType": {
+      "description": "Label for selecting overlay type",
+      "message": "Selecione o tipo de sobreposição:"
+   },
+   "showHandles": {
+      "description": "Label for button to show the handles for circle and image overlays",
+      "message": "Exibir pontos"
+   },
+   "showOverlay": {
+      "description": "Label for button to show the overlay",
+      "message": "Exibir sobreposição"
+   },
+   "terrainHint": {
+      "description": "Terain check box tooltip",
+      "message": "Mostrar mapa de rua com relevo"
+   },
+   "terrainLabel": {
+      "description": "Terain check box label",
+      "message": "Relevo"
+   },
+   "updateImage": {
+      "description": "Label for button to update the image with new URL",
+      "message": "Atualizar imagem"
+   },
+   "updateKml": {
+      "description": "Label for button to update the KML with new URL",
+      "message": "Atualizar KML"
+   },
+   "yesButton": {
+      "description": "Label for Yes button on popup dialogs",
+      "message": "Sim"
+   }
+}
