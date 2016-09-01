@@ -1,0 +1,178 @@
+{
+   "DOCUMENT_NOT_FOUND": {
+      "description": "KML error message",
+      "message": "Dokument nie może zostać odnaleziona. Najprawdopodobniej jest to nieprawidłowy adres URL lub dokument nie jest dostępny publicznie."
+   },
+   "DOCUMENT_TOO_LARGE": {
+      "description": "KML error message",
+      "message": "Dokument przekracza limit rozmiaru dla pliku KML."
+   },
+   "FETCH_ERROR": {
+      "description": "KML error message",
+      "message": "Nie można pobrać dokumentu."
+   },
+   "INVALID_DOCUMENT": {
+      "description": "KML error message",
+      "message": "Ten plik nie zawiera poprawnego formatu KML, KMZ lub GeoRSS."
+   },
+   "INVALID_REQUEST": {
+      "description": "KML error message",
+      "message": "Warstwa KML jest niepoprawna."
+   },
+   "LIMITS_EXCEEDED": {
+      "description": "KML error message",
+      "message": "Dokument przekracza dopuszczalną wartość funkcji dla warstwy KML."
+   },
+   "TIMED_OUT": {
+      "description": "KML error message",
+      "message": "Zbyt długi czas ładowania pliku."
+   },
+   "UNKNOWN": {
+      "description": "KML error message",
+      "message": "Ups! Niewiedzieć czemu, ale nie udało się wczytać tego pliku KML"
+   },
+   "appDesc": {
+      "description": "The description of the application, displayed in the web store.",
+      "message": "Rozszerz Google Map Maker o możliwość wyświetlania w edytorze nakładek ułatwiających edycję: okręgu, grafik, ścieźek KML, oraz widoku terenu."
+   },
+   "appName": {
+      "description": "The title of the application, displayed in the web store.",
+      "message": "Map Maker Overlay (nakładki w edytorze)"
+   },
+   "cancelButton": {
+      "description": "Label for Cancel button on popup dialogs",
+      "message": "Anuluj"
+   },
+   "circleColor": {
+      "description": "Label for circle color control",
+      "message": "Kolor okręgu:"
+   },
+   "circleLabel": {
+      "description": "Label for circle overlay",
+      "message": "Okrąg"
+   },
+   "circleWidth": {
+      "description": "Label for circle width control",
+      "message": "Rozmiar okregu:"
+   },
+   "confirmDialogTitle": {
+      "description": "Title for confirmation dialogs",
+      "message": "Potwierdzenie"
+   },
+   "deleteSelectedImageDialog": {
+      "description": "Label for delete selected dialog message",
+      "message": "Czy napewno chcesz to usunąć?"
+   },
+   "deleteselected": {
+      "description": "Label for Delete Selected Image button",
+      "message": "Usuń zaznaczony"
+   },
+   "hideHandles": {
+      "description": "Label for button to hide the handles for circle and image overlays",
+      "message": "Ukryj punkty"
+   },
+   "hideOverlay": {
+      "description": "Label for button to hide the overlay",
+      "message": "Ukryj nakładkę"
+   },
+   "imageLabel": {
+      "description": "Label for image overlay",
+      "message": "Obraz"
+   },
+   "imageUrl": {
+      "description": "Label for image URL text input",
+      "message": "URL obrazu:"
+   },
+   "kmlLabel": {
+      "description": "Label for KML overlay",
+      "message": "KML"
+   },
+   "kmlUrl": {
+      "description": "Label for KML URL text input",
+      "message": "KML URL:"
+   },
+   "loading": {
+      "description": "Message that shows while getting information from the content script",
+      "message": "Wczytuję..."
+   },
+   "loadselected": {
+      "description": "Label for Load Selected Image button",
+      "message": "Załaduj zaznaczony"
+   },
+   "noButton": {
+      "description": "Label for No button on popup dialogs",
+      "message": "Nie"
+   },
+   "opacity": {
+      "description": "Label for opacity control for circle and image overlays",
+      "message": "Przeźroczystość:"
+   },
+   "overwriteImageDialog": {
+      "description": "Label for overwrite confirm dialog message",
+      "message": "Istnieje już obraz o tej nazwie.  Nadpisać?"
+   },
+   "resetPosition": {
+      "description": "Label for button to reset the position for circle and image overlays",
+      "message": "Przywróć domyślny okrąg"
+   },
+   "rotation": {
+      "description": "Label for rotation control for image overlay",
+      "message": "Obrót:"
+   },
+   "saveButton": {
+      "description": "Label for Save button on popup dialogs",
+      "message": "Zapisz"
+   },
+   "saveCurrentImage": {
+      "description": "Label for Save Current Image button",
+      "message": "Zapisz aktywny obrqaz jako..."
+   },
+   "saveCurrentImageDialog": {
+      "description": "Label for Save Current Image dialog message",
+      "message": "Zapisz aktywny obraz wraz z ustawieniami:"
+   },
+   "saveCurrentImageDialogTitle": {
+      "description": "Title for Save Current Image dialog",
+      "message": "Zapisz obraz jako..."
+   },
+   "savedImageButton": {
+      "description": "Label for button to show or hide the saved images controls",
+      "message": "Zapisane obrazy"
+   },
+   "savedImageLabel": {
+      "description": "Label for the saved images controls",
+      "message": "Lista obrazów:"
+   },
+   "selectOverlayType": {
+      "description": "Label for selecting overlay type",
+      "message": "Wybież rodzaj nakładki:"
+   },
+   "showHandles": {
+      "description": "Label for button to show the handles for circle and image overlays",
+      "message": "Pokaż punkty"
+   },
+   "showOverlay": {
+      "description": "Label for button to show the overlay",
+      "message": "Pokaż nakładkę"
+   },
+   "terrainHint": {
+      "description": "Terain check box tooltip",
+      "message": "Pokaż mapę dróg wraz z terenem"
+   },
+   "terrainLabel": {
+      "description": "Terain check box label",
+      "message": "Teren"
+   },
+   "updateImage": {
+      "description": "Label for button to update the image with new URL",
+      "message": "Odśwież obraz"
+   },
+   "updateKml": {
+      "description": "Label for button to update the KML with new URL",
+      "message": "Odśwież plik KML"
+   },
+   "yesButton": {
+      "description": "Label for Yes button on popup dialogs",
+      "message": "Tak"
+   }
+}
